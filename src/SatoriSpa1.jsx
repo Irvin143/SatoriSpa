@@ -163,10 +163,7 @@ export default function SatoriSpa() {
         </article>
 
         {/* ── SUBTÍTULO SOBRE NOSOTROS ───────────────────────────────────────── */}
-        {/* <article className="subtitulo subtitulo-centrado flex flex-col items-center justify-center ml-5 my-[50px] mb-[30px] lg:bg-[#f5f0e9]">
-          <h2 className="text-[#615c56] text-[1.8em] font-['Trebuchet_MS'] font-bold my-[10px]">Sobre Nosotros</h2>
-          <hr className="border-none h-px bg-[rgba(128,128,128,1)] w-[60px] ml-[10px]" />
-        </article> */}
+
         <SubTitulo titulo="Sobre Nosotros" id="sobre-nosotros" className="subtitulo subtitulo-centrado flex flex-col items-center justify-center lg:bg-[#f5f0e9]"/>
 
         {/* ── SOBRE NOSOTROS ─────────────────────────────────────────────────── */}
