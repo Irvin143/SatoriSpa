@@ -142,8 +142,8 @@ export default function SatoriSpa() {
             <img src={florBeneficios} alt="" className="w-[30px]" />
           </article>
           <article className="[grid-area:login] hidden lg:flex">
-            <button  className="no-underline text-[#E5E0D8] font-bold  duration-300 p-2 hover:text-shadow-[0_0_5px_#FFFFFF,0_0_5px_#000] hover:cursor-pointer hover:underline hover:decoration-white hover:scale-110 lg:px-2">Iniciar Sesion</button>
-            <button className="no-underline text-[#E5E0D8] font-bold  duration-300 p-2 hover:text-shadow-[0_0_5px_#FFFFFF,0_0_5px_#000] hover:cursor-pointer hover:underline hover:decoration-white hover:scale-110 lg:px-2">Registrarse</button>
+            <Link to="/login"  className="no-underline text-[#E5E0D8] font-bold  duration-300 p-2 hover:text-shadow-[0_0_5px_#FFFFFF,0_0_5px_#000] hover:cursor-pointer hover:underline hover:decoration-white hover:scale-110 lg:px-2">Iniciar Sesion</Link>
+            <Link to="/registro" className="no-underline text-[#E5E0D8] font-bold  duration-300 p-2 hover:text-shadow-[0_0_5px_#FFFFFF,0_0_5px_#000] hover:cursor-pointer hover:underline hover:decoration-white hover:scale-110 lg:px-2">Registrarse</Link>
           </article>
         </header>
 

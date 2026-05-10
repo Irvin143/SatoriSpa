@@ -4,12 +4,13 @@ import Citas from "./Citas.jsx";
 import CitasDatos from "./CitasDatos.jsx";
 import Login from "./Login/Login.jsx";
 import Registro from "./Login/Registro.jsx";
+import Panel from "./admin/panel.jsx";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Principal />} />
+        <Route path="/" element={<Panel />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
         <Route path="/principal" element={<Principal />} />

@@ -8,8 +8,8 @@ import iconContraseña from "../assets/Login/iconPassword.svg";
 
 function Registro() {
     return(
-        <div className="flex justify-center items-start h-screen  bg-[url('./assets/fondoLogin.png')] bg-cover bg-center bg-no-repeat">
-            <article className='w-[90%] py-10 mt-10 flex flex-col justify-center items-center text-white rounded-[20px] bg-black/60 '>
+        <div className="flex justify-center items-start h-screen  bg-[url('./assets/fondoLogin.png')] bg-cover bg-center bg-no-repeat lg:items-center"> 
+            <article className='w-[90%] py-10 mt-10 flex flex-col justify-center items-center text-white rounded-[20px] bg-black/60 lg:w-[35%] lg:m-0'>
                 <header className="w-[80%] grid grid-cols-3 items-center pb-5 mb-5 ">
                     <Link to="/login" className="justify-self-start text-xl ">X</Link>
                     <h2 className="justify-self-center text-4xl font-bold">SATORI</h2>
@@ -25,7 +25,7 @@ function Registro() {
                         <Input textoFondo="Telefono" tipo="tel" imagen={iconTelefono} />
                         <Input textoFondo="Contraseña" tipo="password" imagen={iconContraseña} />
                         <Input textoFondo="Confirmar contraseña" tipo="password" imagen={iconContraseña} />
-                        <Link to="/login" className="block w-[90%] bg-[#87520E] text-white text-center text py-3 mx-auto  rounded-[25px] backdrop-blur-md font-bold hover:cursor-pointer hover:bg-[#655e57]/70 transition-all duration-300">
+                        <Link to="/login" className="block w-[90%] bg-[#87520E] text-white text-center text py-3 mt-3 mx-auto  rounded-[25px] backdrop-blur-md font-bold hover:cursor-pointer hover:bg-[#87520E]/50 transition-all duration-300">
                             Crear cuenta
                         </Link>
                         <p className='mt-5 flex justify-center items-center gap-2'>¿Ya tienes una cuenta? <Link to="/login" className="text-[#A86714] hover:underline">Inicia sesión</Link></p>
