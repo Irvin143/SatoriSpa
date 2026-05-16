@@ -8,58 +8,96 @@ import iconLapiz from "../../assets/iconLapiz.webp";
 import iconEliminar from "../../assets/iconBasura.png";
 
 function PanelRituales() {
+    
+    const [btnFiltroSelect ,setBtnFiltroSelect] = useState("TODOS");
+
     return(
-        <section>
-            <h2 className='font-bold text-3xl my-5'>Catalogo de Rituales</h2>
-            <span>Configure las experiencias sencsoriales del santuario, gestionando tiempos, esencias y la armonia en cada sesion</span>
-            <button className='bg-[#655e57] text-[#f4f0ea] w-full py-3 rounded-[10px] text-sm font-bold mt-5 hover:cursor-pointer hover:bg-[#655e57]/70 transition-all duration-300'>
-                + NUEVO RITUAL
-            </button>
-            <article className='relative w-full mt-5 mb-5'>
-                <img src={iconLupa} alt="Buscar" className='absolute left-3 top-1/2 transform -translate-y-1/2 w-[20px] h-[20px]' />
-                <input type="text" placeholder="Buscar ritual..." className='pl-10 py-3 border-1 border-[#655e57]/15 rounded-[10px] w-full' />
+        <section className='text-white w-full flex flex-col items-center justify-start p-5'> 
+            <article className='lg:flex lg:items-center lg:justify-between lg:w-full lg:mb-10'>
+                <article>
+                    <h2 className='font-bold text-3xl my-5'>Catalogo de Rituales</h2>
+                    <span>Configure las experiencias sensoriales del santuario, gestionando tiempos, esencias y la armonia en cada sesion</span>
+                </article>
+                <button className='bg-white text-[#655e57] w-full py-3 rounded-[10px] text-sm font-bold mt-5 hover:cursor-pointer hover:bg-[#f4f0ea]/70 hover:scale-105 transition-all duration-300 lg:w-auto lg:mt-0 lg:px-10 lg:mr-10'>
+                    + NUEVO RITUAL
+                </button>
             </article>
 
-            <article className='flex gap-1 p-1 border-1 border-[#655e57]/15 rounded-[50px] 5 mb-10'>
-                <BotonFiltro texto="TODOS" />
-                <BotonFiltro texto="MASAJES" />
-                <BotonFiltro texto="FACIALES" />
-            </article>
-            <article className='lg:flex lg:gap-15'>
+            <article
+                className='lg:bg-white/10
+                lg:backdrop-blur-xl
+                lg:border border-white/30 
+                rounded-[30px]
+                p-5
+                text-[#655e57]'
+            >
+                <article className='lg:flex lg:items-center lg:justify-center gap-10 mb-10'>
+                    <article className='relative w-full mt-5 mb-5'>
+                        <img src={iconLupa} alt="Buscar" className='absolute left-3 top-1/2 transform -translate-y-1/2 w-[20px] h-[20px]' />
+                        <input type="text" placeholder="Buscar ritual..." className='pl-10 py-3  rounded-[10px] text-white w-full bg-white/35' />
+                    </article>
+                    <article className='flex lg:justify-center  gap-1 p-1 border-1 border-white rounded-[50px] '>
+                        <BotonFiltro texto="TODOS" btnSeleccionado={btnFiltroSelect} onClick={() => setBtnFiltroSelect("TODOS")} />
+                        <BotonFiltro texto="MASAJES" btnSeleccionado={btnFiltroSelect} onClick={() => setBtnFiltroSelect("MASAJES")} />
+                        <BotonFiltro texto="FACIALES" btnSeleccionado={btnFiltroSelect} onClick={() => setBtnFiltroSelect("FACIALES")} />
+                    </article>
+                </article>
 
-                <CardServicio
-                    id={1}
-                    nombre="Ritual de Armonía"
-                    descripcion="Un masaje completo que combina técnicas de relajación profunda con esencias naturales para equilibrar cuerpo y mente."
-                    tiempo="90 min"
-                    categoria="Masaje"
-                    precio="120"
-                />
-                <CardServicio
-                    id={1}
-                    nombre="Ritual de Armonía"
-                    descripcion="Un masaje completo que combina técnicas de relajación profunda con esencias naturales para equilibrar cuerpo y mente."
-                    tiempo="90 min"
-                    categoria="Masaje"
-                    precio="120"
-                />
-                <CardServicio
-                    id={1}
-                    nombre="Ritual de Armonía"
-                    descripcion="Un masaje completo que combina técnicas de relajación profunda con esencias naturales para equilibrar cuerpo y mente."
-                    tiempo="90 min"
-                    categoria="Masaje"
-                    precio="120"
-                />
+                
+                <article className="lg:grid lg:grid-cols-3 lg:gap-15">
+                    <CardServicio
+                        id={1}
+                        nombre="Ritual de Armonía"
+                        descripcion="Un masaje completo que combina técnicas de relajación profunda con esencias naturales para equilibrar cuerpo y mente."
+                        tiempo="90 min"
+                        categoria="Masaje"
+                        precio="120"
+                    />
+                    <CardServicio
+                        id={1}
+                        nombre="Ritual de Armonía"
+                        descripcion="Un masaje completo que combina técnicas de relajación profunda con esencias naturales para equilibrar cuerpo y mente."
+                        tiempo="90 min"
+                        categoria="Masaje"
+                        precio="120"
+                    />
+                    <CardServicio
+                        id={1}
+                        nombre="Ritual de Armonía"
+                        descripcion="Un masaje completo que combina técnicas de relajación profunda con esencias naturales para equilibrar cuerpo y mente."
+                        tiempo="90 min"
+                        categoria="Masaje"
+                        precio="120"
+                    />
+                    <CardServicio
+                        id={1}
+                        nombre="Ritual de Armonía"
+                        descripcion="Un masaje completo que combina técnicas de relajación profunda con esencias naturales para equilibrar cuerpo y mente."
+                        tiempo="90 min"
+                        categoria="Masaje"
+                        precio="120"
+                    />
+                </article>
             </article>
         </section>
     );
-}
+}   
 
 
-function BotonFiltro({ texto}){
+function BotonFiltro({ texto, btnSeleccionado, onClick }) {
     return(
-        <button className='px-7 py-2 bg-[#655e57] rounded-[50px] text-[#f4f0ea] text-xs'>
+        <button 
+            onClick={onClick}
+            className={`
+                px-7 py-2 rounded-[50px] text-xs font-bold
+                hover:cursor-pointer  transition-all duration-300
+                ${
+                    btnSeleccionado === texto
+                        ? "bg-white/80 text-[#655e57] shadow-xl shadow-black/40"
+                        : "hover:scale-110"
+                }
+            `}
+        >
             {texto}
         </button>
     );
@@ -69,7 +107,7 @@ function CardServicio({ id, nombre, descripcion, onSeleccionar, tiempo = "60 min
     return (
         <article
         key={id}
-        className=" lg:w-[20%] bg-white rounded-[30px]  flex flex-col mb-10 backdrop-blur-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:bg-[#FFF] ">
+        className="w-[90%] mx-auto bg-white/80 rounded-[30px]  flex flex-col mb-10 backdrop-blur-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:bg-[#FFF] ">
 
             <article className={`rounded-[30px] flex flex-col  backdrop-blur-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:bg-[#FFF] `}>
             
@@ -88,12 +126,12 @@ function CardServicio({ id, nombre, descripcion, onSeleccionar, tiempo = "60 min
                 </article>
                 </div>
                 <article className='flex items-center px-6 justify-between'>
-                    <span className="text-[1.2em] py-2 mt-3 font-bold">{nombre}</span>
-                    <article className='flex gap-8'>
-                        <button className="flex  group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="text-[1.2em] py-2 mt-3 font-bold w-[60%]">{nombre}</span>
+                    <article className='flex gap-6 w-[30%] lg:px-5 lg:w-[50%]  lg:justify-end '>
+                        <button className="flex  group-hover:opacity-100 transition-opacity duration-300 hover:cursor-pointer">
                             <img src={iconLapiz} alt="Editar" className='w-[20px] h-[20px]' />
                         </button>
-                        <button className="flex  group-hover:opacity-100 transition-opacity duration-300">
+                        <button className="flex  group-hover:opacity-100 transition-opacity duration-300 hover:cursor-pointer">
                             <img src={iconEliminar} alt="Eliminar" className='w-[20px] h-[20px]' />
                         </button>
                     </article>
