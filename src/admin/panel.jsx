@@ -1,13 +1,12 @@
-import { React } from 'react';
 import { useState } from 'react';
 import { Link } from "react-router-dom";
+
 import "@fontsource/playfair-display";
 
 import iconLupa from "../assets/iconLupa.png";
 import PanelRituales from './Paneles/PanelRituales.jsx';
 import fondoRituales from "../assets/Panels/fondoRituales.jpg";
 import logoSatori from "../assets/logoSatori.jpeg";
-
 
 function Panel() {
 
@@ -48,14 +47,14 @@ function Panel() {
                     <h1 className='text-2xl font-bold'>Panel de Administración</h1>
                 </header>
 
-                <PanelRituales></PanelRituales>
+                <PanelRituales/>
 
             </article>
         </div>
     );
 }
 
-function BotonAside({ texto, btnSeleccionado, onClick }) {
+function BotonAside({ texto, btnSeleccionado, onClick }){
     return (
         <button
             onClick={onClick}
@@ -76,5 +75,6 @@ function BotonAside({ texto, btnSeleccionado, onClick }) {
         </button>
     );
 }
+
 
 export default Panel;

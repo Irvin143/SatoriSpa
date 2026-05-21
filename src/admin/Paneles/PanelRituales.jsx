@@ -44,7 +44,63 @@ function PanelRituales() {
                 </article>
 
                 
-                <article className="lg:grid lg:grid-cols-3 lg:gap-15">
+                <article className="lg:grid lg:grid-cols-3 lg:gap-15 lg:max-h-[900px] lg:overflow-y-auto">
+                    <CardServicio
+                        id={1}
+                        nombre="Ritual de Armonía"
+                        descripcion="Un masaje completo que combina técnicas de relajación profunda con esencias naturales para equilibrar cuerpo y mente."
+                        tiempo="90 min"
+                        categoria="Masaje"
+                        precio="120"
+                    />
+                    <CardServicio
+                        id={1}
+                        nombre="Ritual de Armonía"
+                        descripcion="Un masaje completo que combina técnicas de relajación profunda con esencias naturales para equilibrar cuerpo y mente."
+                        tiempo="90 min"
+                        categoria="Masaje"
+                        precio="120"
+                    />
+                    <CardServicio
+                        id={1}
+                        nombre="Ritual de Armonía"
+                        descripcion="Un masaje completo que combina técnicas de relajación profunda con esencias naturales para equilibrar cuerpo y mente."
+                        tiempo="90 min"
+                        categoria="Masaje"
+                        precio="120"
+                    />
+                    <CardServicio
+                        id={1}
+                        nombre="Ritual de Armonía"
+                        descripcion="Un masaje completo que combina técnicas de relajación profunda con esencias naturales para equilibrar cuerpo y mente."
+                        tiempo="90 min"
+                        categoria="Masaje"
+                        precio="120"
+                    />
+                    <CardServicio
+                        id={1}
+                        nombre="Ritual de Armonía"
+                        descripcion="Un masaje completo que combina técnicas de relajación profunda con esencias naturales para equilibrar cuerpo y mente."
+                        tiempo="90 min"
+                        categoria="Masaje"
+                        precio="120"
+                    />
+                    <CardServicio
+                        id={1}
+                        nombre="Ritual de Armonía"
+                        descripcion="Un masaje completo que combina técnicas de relajación profunda con esencias naturales para equilibrar cuerpo y mente."
+                        tiempo="90 min"
+                        categoria="Masaje"
+                        precio="120"
+                    />
+                    <CardServicio
+                        id={1}
+                        nombre="Ritual de Armonía"
+                        descripcion="Un masaje completo que combina técnicas de relajación profunda con esencias naturales para equilibrar cuerpo y mente."
+                        tiempo="90 min"
+                        categoria="Masaje"
+                        precio="120"
+                    />
                     <CardServicio
                         id={1}
                         nombre="Ritual de Armonía"
@@ -107,24 +163,23 @@ function CardServicio({ id, nombre, descripcion, onSeleccionar, tiempo = "60 min
     return (
         <article
         key={id}
-        className="w-[90%] mx-auto bg-white/80 rounded-[30px]  flex flex-col mb-10 backdrop-blur-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:bg-[#FFF] ">
+        className="w-[90%] mx-auto bg-white/80 rounded-[30px]  flex flex-col mb-10 lg:mb-0 backdrop-blur-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:bg-[#FFF] lg:mt-10 ">
 
             <article className={`rounded-[30px] flex flex-col  backdrop-blur-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:bg-[#FFF] `}>
             
-                <div className="relative overflow-hidden rounded-t-[30px] group">
+                {/* <div className="relative overflow-hidden rounded-t-[30px] group">
                     <img 
                     src={img} 
                     alt="" 
                     className="h-[200px] object-cover transition-transform duration-500 group-hover:scale-110"
                     />
 
-                {/* INFO (parte inferior) */}
                 <article className="absolute top-3 left-3 flex text-[0.8em] justify-center items-center gap-2">
                     <span className="bg-[#f5f0e9] py-1 px-2 rounded-[40px]">
                     {categoria}
                     </span>
                 </article>
-                </div>
+                </div> */}
                 <article className='flex items-center px-6 justify-between'>
                     <span className="text-[1.2em] py-2 mt-3 font-bold w-[60%]">{nombre}</span>
                     <article className='flex gap-6 w-[30%] lg:px-5 lg:w-[50%]  lg:justify-end '>
