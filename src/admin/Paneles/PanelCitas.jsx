@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BotonFiltro } from '../componentesPanel/buttons.jsx';
 
-import puntoVerde from "../../assets/panels/puntoVerde.png";
+import iconLupa from "../../assets/iconLupa.png";
 
 export default function PanelCitas({btnAsideSelect}){
     
@@ -46,8 +46,12 @@ export default function PanelCitas({btnAsideSelect}){
                         onClick={() => setBtnFiltroSelect("CANCELADAS")}
                     />
                 </nav>
-                <input type="text" placeholder="Buscar cliente o ritual" className='pl-10 py-3  rounded-[10px] text-white w-full bg-white/35' />
-                <article className="my-5 text-[#655e57]">
+                <article className='relative w-full mt-5 mb-5'>
+                    <img src={iconLupa} alt="Buscar" className='absolute left-3 top-1/2 transform -translate-y-1/2 w-[20px] h-[20px]' />
+                    <input type="text" placeholder="Buscar ritual..." className='pl-10 py-3  rounded-[10px] text-white w-full bg-white/35' />
+                </article>
+                
+                <article className="my-5 text-[#655e57] lg:hidden">
                     <CardCita 
                         nombreCte="John Doe"
                         estatus="Cancelada"
@@ -55,7 +59,48 @@ export default function PanelCitas({btnAsideSelect}){
                         fecha="2023-10-15"
                         horario="10:00 AM"
                     />
+                </article> 
+                
+                {/*Tabla*/}
+                <article className="my-5 ">
+                    <table className="w-full text-[#655e57] border-collapse-fixed">
+                        <thead >
+                            <tr className="bg-[#f4f0ea]/80 backdrop-blur-md">
+                                <th className="border p-2">Nombre</th>
+                                <th className="border p-2">Ritual/Servicio</th>
+                                <th className="border p-2">Fecha</th>
+                                <th className="border p-2">Horario</th>
+                                <th className="border p-2">Estatus</th>
+                                <th className="border p-2">Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody className="bg-white">
+                            <RegistroTable
+                                nombreCte="Jane Smith"
+                                estatus="Pendiente"
+                                ritual="Ritual de Relajación"
+                                fecha="2023-10-16"
+                                horario="2:00 PM"
+                            />
+                            <RegistroTable
+                                nombreCte="Alice Johnson"
+                                estatus="Completada"
+                                ritual="Ritual de Energización"
+                                fecha="2023-10-17"
+                                horario="11:00 AM"
+                            />
+                            <RegistroTable
+                                nombreCte="Alice Johnson"
+                                estatus="Cancelada"
+                                ritual="Ritual de Energización"
+                                fecha="2023-10-17"
+                                horario="11:00 AM"
+                            />
+                        </tbody>
+                    </table>
                 </article>
+
 
         </section>
     );
@@ -75,5 +120,23 @@ function CardCita({nombreCte, estatus, ritual, fecha, horario}){
             <span>{fecha}</span>
             <span>{horario}</span>
         </article>
+    );
+}
+
+function RegistroTable({nombreCte, estatus, ritual, fecha, horario}){
+    return(
+        <tr className="border-b">
+            <td className="pl-2 ">{nombreCte}</td>
+            <td className="pl-2">{ritual}</td>
+            <td className="pl-2">{fecha}</td>
+            <td className="pl-2">{horario}</td>
+            <td className=" py-3">
+                <article className={` ${estatus === "Pendiente" ? "bg-yellow-500" : estatus === "Completada" ? "bg-green-500" :estatus === "Cancelada" ? "bg-red-500" : "bg-gray-500"} 
+                                    px-3 rounded-full inline-block text-black`} >
+                    {estatus}
+                </article>
+            </td>
+            <td></td>
+        </tr>
     );
 }
