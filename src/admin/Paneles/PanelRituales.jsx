@@ -7,12 +7,14 @@ import iconLupa from "../../assets/iconLupa.png";
 import iconLapiz from "../../assets/iconLapiz.webp";
 import iconEliminar from "../../assets/iconBasura.png";
 
-function PanelRituales() {
+import { BotonFiltro } from '../componentesPanel/buttons.jsx';
+
+function PanelRituales({btnAsideSelect}) {
     
     const [btnFiltroSelect ,setBtnFiltroSelect] = useState("TODOS");
 
     return(
-        <section className='text-white w-full flex flex-col items-center justify-start p-5'> 
+        <section className={`${btnAsideSelect === 'RITUALES' ? 'flex' : 'hidden'} text-white w-full flex flex-col items-center justify-start p-5`}>
             <article className='lg:flex lg:items-center lg:justify-between lg:w-full lg:mb-10'>
                 <article>
                     <h2 className='font-bold text-3xl my-5'>Catalogo de Rituales</h2>
@@ -43,7 +45,6 @@ function PanelRituales() {
                     </article>
                 </article>
 
-                
                 <article className="lg:grid lg:grid-cols-3 lg:gap-15 lg:max-h-[900px] lg:overflow-y-auto">
                     <CardServicio
                         id={1}
@@ -139,25 +140,6 @@ function PanelRituales() {
     );
 }   
 
-
-function BotonFiltro({ texto, btnSeleccionado, onClick }) {
-    return(
-        <button 
-            onClick={onClick}
-            className={`
-                px-7 py-2 rounded-[50px] text-xs font-bold
-                hover:cursor-pointer  transition-all duration-300
-                ${
-                    btnSeleccionado === texto
-                        ? "bg-white/80 text-[#655e57] shadow-xl shadow-black/40"
-                        : "hover:scale-110"
-                }
-            `}
-        >
-            {texto}
-        </button>
-    );
-}
 
 function CardServicio({ id, nombre, descripcion, onSeleccionar, tiempo = "60 min", categoria = "Masaje", precio = "80", img = iconLupa }) {
     return (

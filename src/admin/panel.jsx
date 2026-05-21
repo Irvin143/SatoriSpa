@@ -3,14 +3,17 @@ import { Link } from "react-router-dom";
 
 import "@fontsource/playfair-display";
 
-import iconLupa from "../assets/iconLupa.png";
 import PanelRituales from './Paneles/PanelRituales.jsx';
+import PanelCitas from './Paneles/PanelCitas.jsx';
+
+import iconLupa from "../assets/iconLupa.png";
 import fondoRituales from "../assets/Panels/fondoRituales.jpg";
 import logoSatori from "../assets/logoSatori.jpeg";
 
 function Panel() {
 
-    const [btnAsideSelect,setBtnAsideSelect] = useState("");
+    const [btnAsideSelect,setBtnAsideSelect] = useState("CITAS");
+    const [seccionSeleccionada, setSeleccionSeleccionada] = useState(1);
     
     return(
         <div
@@ -47,7 +50,13 @@ function Panel() {
                     <h1 className='text-2xl font-bold'>Panel de Administración</h1>
                 </header>
 
-                <PanelRituales/>
+                <PanelRituales 
+                    btnAsideSelect={btnAsideSelect}
+                />
+    
+                <PanelCitas 
+                    btnAsideSelect={btnAsideSelect}
+                />
 
             </article>
         </div>
