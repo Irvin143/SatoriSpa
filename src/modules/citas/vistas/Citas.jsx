@@ -2,14 +2,14 @@ import React from 'react';
 import { useState } from 'react';
 import { Link } from "react-router-dom";
 
-import logoSatori from "./assets/LogoSatori.jpeg";
-import florBeneficios from "./assets/florBeneficios.png";
-import iconinfo from "./assets/info.png";
-import iconCalendario from "./assets/iconCalendario.png";
-import iconReloj from "./assets/iconReloj.webp";
-import fondoHeader      from "./assets/FondoHeaderPiscina.png";
-import fondoCitas from "./assets/FondoCitas.png";
-import masaje from "./assets/masaje2.jpeg";
+import logoSatori from "../../../assets/LogoSatori.jpeg";
+import florBeneficios from "../../../assets/florBeneficios.png";
+import iconinfo from "../../../assets/info.png";
+import iconCalendario from "../../../assets/iconCalendario.png";
+import iconReloj from "../../../assets/iconReloj.webp";
+import fondoHeader      from "../../../assets/FondoHeaderPiscina.png";
+import fondoCitas from "../../../assets/FondoCitas.png";
+import masaje from "../../../assets/masaje2.jpeg";
 import CitasHorario from "./CItasHorario.jsx";
 import CitasDatos from './CitasDatos.jsx';
 

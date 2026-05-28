@@ -2,8 +2,9 @@ import { React } from 'react';
 import { useState } from 'react';
 import { Link } from "react-router-dom";
 import "@fontsource/playfair-display";
-import iconCorreo from "../assets/Login/iconCorreo.png";
-import iconContraseña from "../assets/Login/iconPassword.svg";
+
+import iconCorreo from "../../../assets/Login/iconCorreo.png";
+import iconContraseña from "../../../assets/Login/iconPassword.svg";
 
 function Login() {
     return(

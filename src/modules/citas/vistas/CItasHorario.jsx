@@ -1,14 +1,14 @@
 import { React } from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import CitasDatos from './CitasDatos.jsx';
+import CitasDatos from '../vistas/CitasDatos.jsx';
 
 
-import fondoHeader from "./assets/FondoHeader.jpeg";
-import estrellas from "./assets/Citas/estrellas.jpg";
-import iconCalendario from "./assets/iconCalendario.png";
-import iconReloj from "./assets/iconReloj.webp";
-import ResumenSeleccion  from './Components.jsx';
+import fondoHeader from "../../../assets/FondoHeader.jpeg";
+import estrellas from "../../../assets/Citas/estrellas.jpg";
+import iconCalendario from "../../../assets/iconCalendario.png";
+import iconReloj from "../../../assets/iconReloj.webp";
+import ResumenSeleccion  from '../../../Components.jsx';
 
 export default function CitasHorario({ordenSeleccionado, setOrdenSeleccionado, servicios, servicioSeleccionado}) {
     const [fecha, setFecha] = useState(new Date());

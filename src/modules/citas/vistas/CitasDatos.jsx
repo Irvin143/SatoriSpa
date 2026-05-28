@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { Link } from "react-router-dom";
-import ResumenSeleccion  from './Components.jsx';
+import ResumenSeleccion  from '../../../Components.jsx';
 
 function CitasDatos({ordenSeleccionado, setOrdenSeleccionado, servicios, servicioSeleccionado,diaText,diaNumber,mes,horarioSeleccionado}) {
     return(

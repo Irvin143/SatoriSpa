@@ -3,22 +3,22 @@ import { Link } from "react-router-dom";
 
 
 /* ─── Imágenes ────────────────────────────────────────────────────────────── */
-import logoSatori       from "./assets/LogoSatori.jpeg";
-import fondoHeader      from "./assets/FondoHeaderPiscina.png";
-import imgFacial        from "./assets/Facial.jfif";
-import imgMasaje2       from "./assets/Masaje2.jpeg";
-import imgMasaje        from "./assets/Masaje.jpeg";
-import imgCorporal      from "./assets/Corporal.jfif";
-import imgMapa          from "./assets/Mapa.png";
-import iconUbicacion    from "./assets/IconUbicacion.webp";
-import iconWhatsapp     from "./assets/IconWhatssap.png";
-import iconCalendario   from "./assets/IconCalendario.png";
-import iconFacebook     from "./assets/IconFacebook.png";
-import iconInsta        from "./assets/iconInsta.webp";
-import iconTiktok       from "./assets/iconTiktok.png";
-import corazonBenficios from "./assets/CorazonBeneficios.png";
-import florBeneficios from "./assets/florBeneficios.png";
-import iconBeneficios from "./assets/IconBeneficios.png";
+import logoSatori       from "../../assets/LogoSatori.jpeg";
+import fondoHeader      from "../../assets/FondoHeaderPiscina.png";
+import imgFacial        from "../../assets/Facial.jfif";
+import imgMasaje2       from "../../assets/Masaje2.jpeg";
+import imgMasaje        from "../../assets/Masaje.jpeg";
+import imgCorporal      from "../../assets/Corporal.jfif";
+import imgMapa          from "../../assets/Mapa.png";
+import iconUbicacion    from "../../assets/IconUbicacion.webp";
+import iconWhatsapp     from "../../assets/IconWhatssap.png";
+import iconCalendario   from "../../assets/IconCalendario.png";
+import iconFacebook     from "../../assets/IconFacebook.png";
+import iconInsta        from "../../assets/iconInsta.webp";
+import iconTiktok       from "../../assets/iconTiktok.png";
+import corazonBenficios from "../../assets/CorazonBeneficios.png";
+import florBeneficios from "../../assets/florBeneficios.png";
+import iconBeneficios from "../../assets/IconBeneficios.png";
 
 /* ─── Estilos globales que no tienen equivalente en Tailwind ──────────────── */
 const globalStyles = `

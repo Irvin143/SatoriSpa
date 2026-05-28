@@ -1,10 +1,10 @@
 import { React } from 'react';
 import { useState } from 'react';
 import { Link } from "react-router-dom";
-import iconUsuario from "../assets/Login/iconUsuario.png";
-import iconCorreo from "../assets/Login/iconCorreo.png";
-import iconTelefono from "../assets/Login/iconTelefono.webp";
-import iconContraseña from "../assets/Login/iconPassword.svg";
+import iconUsuario from "../../../assets/Login/iconUsuario.png";
+import iconCorreo from "../../../assets/Login/iconCorreo.png";
+import iconTelefono from "../../../assets/Login/iconTelefono.webp";
+import iconContraseña from "../../../assets/Login/iconPassword.svg";
 
 function Registro() {
     return(

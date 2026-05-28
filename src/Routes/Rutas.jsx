@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Principal from "./SatoriSpa1.jsx";
-import Citas from "./Citas.jsx";
-import CitasDatos from "./CitasDatos.jsx";
-import Login from "./Login/Login.jsx";
-import Registro from "./Login/Registro.jsx";
-import Panel from "./admin/panel.jsx";
+import Principal from "../modules/princiapl/SatoriSpa1.jsx";
+import Citas from "../modules/citas/vistas/Citas.jsx";
+import CitasDatos from "../modules/citas/vistas/CitasDatos.jsx";
+import Login from "../modules/login/vistas/Login.jsx";
+import Registro from "../modules/login/vistas/Registro.jsx";
+import Panel from "../modules/panelAdministracion/vistas/panel.jsx";
 
 function App() {
   return (
