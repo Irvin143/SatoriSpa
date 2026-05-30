@@ -337,7 +337,7 @@ function CardServicio({ id, nombre, descripcion, imagen, nombreImagen }) {
         <article className="flex flex-col mt-4 text-[#655e57]">
           <span className="text-[1.2em] font-bold">{nombre}</span>
           <p className="text-[0.9em]">{descripcion}</p>
-          <Link to="/citas"
+          <Link to="/reservacion"
           className="bg-transparent text-[#655e57] text-[0.8em] border-0 border-b border-[#655e57] pb-[3px] self-end cursor-pointer rounded-none hover:text-[#655e57]/80 transition duration-300 hover:scale-105 mt-2">
           RESERVAR </Link>
         </article>
