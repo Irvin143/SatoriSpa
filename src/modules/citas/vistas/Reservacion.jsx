@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { Link, Outlet } from "react-router-dom";
 
-import logoSatori from "../../../assets/iogoSatori.jpeg";
+import logoSatori from "../../../assets/logoSatori.jpeg";
 import florBeneficios from "../../../assets/florBeneficios.png";
 import iconinfo from "../../../assets/info.png";
 import iconCalendario from "../../../assets/iconCalendario.png";
