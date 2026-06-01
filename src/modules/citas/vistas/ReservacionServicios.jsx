@@ -1,7 +1,7 @@
 import { useState, UseState } from 'React';
 import { useOutletContext,Link } from "react-router-dom";
 
-import fondoCitas from "../../../assets/FondoCitas.png";
+import fondoCitas from "../../../assets/fondoCitas.png";
 
 import { CardError }  from '../../../Components.jsx';
 

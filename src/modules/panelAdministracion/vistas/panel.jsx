@@ -7,10 +7,10 @@ import PanelRituales from '../vistas/PanelRituales.jsx';
 import PanelCitas from '../vistas/PanelCitas.jsx';
 
 import iconLupa from "../../../assets/iconLupa.png";
-import fondoRituales from "../../../assets/Panels/fondoRituales.jpg";
 import logoSatori from "../../../assets/logoSatori.jpeg";
-
 import iconCalendario from "../../../assets/iconCalendario.png";
+
+import fondoRituales from "../../../assets/Panels/fondoRituales.jpg";
 import iconCalendarioBlanco from "../../../assets/Panels/iconCalendarioBlanco.png";
 import iconRituales from "../../../assets/panels/iconRitualAside.png";
 

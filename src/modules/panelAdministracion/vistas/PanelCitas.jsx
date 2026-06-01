@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BotonFiltro } from '../componentesPanel/buttons.jsx';
 
-import iconLupa from "../../../assets/IconLupa.png";
+import iconLupa from "../../../assets/iconLupa.png";
 
 import { InputBuscar } from "../componentesPanel/inputs.jsx";
 

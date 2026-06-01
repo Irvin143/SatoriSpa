@@ -4,11 +4,9 @@ import { useOutletContext, Link } from "react-router-dom";
 import CitasDatos from './ReservacionDatos.jsx';
 
 
-import fondoHeader from "../../../assets/FondoHeader.jpeg";
-import estrellas from "../../../assets/Citas/estrellas.jpg";
+import fondoHeader from "../../../assets/fondoHeader.jpeg";
 import iconCalendario from "../../../assets/iconCalendario.png";
 import iconReloj from "../../../assets/iconReloj.webp";
-
 
 import { ResumenSeleccion,CardError }  from '../../../Components.jsx';
 

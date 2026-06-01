@@ -3,17 +3,17 @@ import { Link } from "react-router-dom";
 
 
 /* ─── Imágenes ────────────────────────────────────────────────────────────── */
-import logoSatori       from "../../assets/LogoSatori.jpeg";
-import fondoHeader      from "../../assets/FondoHeaderPiscina.png";
-import imgFacial        from "../../assets/Facial.jfif";
-import imgMasaje2       from "../../assets/Masaje2.jpeg";
-import imgMasaje        from "../../assets/Masaje.jpeg";
-import imgCorporal      from "../../assets/Corporal.jfif";
-import imgMapa          from "../../assets/Mapa.png";
-import iconUbicacion    from "../../assets/IconUbicacion.webp";
-import iconWhatsapp     from "../../assets/IconWhatssap.png";
-import iconCalendario   from "../../assets/IconCalendario.png";
-import iconFacebook     from "../../assets/IconFacebook.png";
+import logoSatori       from "../../assets/logoSatori.jpeg";
+import fondoHeader      from "../../assets/fondoHeaderPiscina.png";
+import imgFacial        from "../../assets/facial.jfif";
+import imgMasaje2       from "../../assets/masaje2.jpeg";
+import imgMasaje        from "../../assets/masaje.jpeg";
+import imgCorporal      from "../../assets/corporal.jfif";
+import imgMapa          from "../../assets/mapa.png";
+import iconUbicacion    from "../../assets/iconUbicacion.webp";
+import iconWhatsapp     from "../../assets/iconWhatssap.png";
+import iconCalendario   from "../../assets/iconCalendario.png";
+import iconFacebook     from "../../assets/iconFacebook.png";
 import iconInsta        from "../../assets/iconInsta.webp";
 import iconTiktok       from "../../assets/iconTiktok.png";
 import corazonBenficios from "../../assets/corazonBeneficios.png";

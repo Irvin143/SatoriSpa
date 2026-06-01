@@ -2,18 +2,18 @@ import React from 'react';
 import { useState } from 'react';
 import { Link, Outlet } from "react-router-dom";
 
-import logoSatori from "../../../assets/LogoSatori.jpeg";
+import logoSatori from "../../../assets/iogoSatori.jpeg";
 import florBeneficios from "../../../assets/florBeneficios.png";
 import iconinfo from "../../../assets/info.png";
-import iconCalendario from "../../../assets/IconCalendario.png";
+import iconCalendario from "../../../assets/iconCalendario.png";
 import iconReloj from "../../../assets/iconReloj.webp";
-import fondoHeader      from "../../../assets/FondoHeaderPiscina.png";
+import fondoHeader      from "../../../assets/fondoHeaderPiscina.png";
+import masaje from "../../../assets/masaje2.jpeg";
+import fondoCitas from "../../../assets/fondoCitas.png";
 
-import masaje from "../../../assets/Masaje2.jpeg";
 import CitasHorario from "./ReservacionHorario.jsx";
 import CitasDatos from './ReservacionDatos.jsx';
 
-import fondoCitas from "../../../assets/FondoCitas.png";
 
 function Citas() {
   const [servicioSeleccionado, setServicioSeleccionado] = useState(null);
