@@ -5,11 +5,11 @@ import { Link, Outlet } from "react-router-dom";
 import logoSatori from "../../../assets/LogoSatori.jpeg";
 import florBeneficios from "../../../assets/florBeneficios.png";
 import iconinfo from "../../../assets/info.png";
-import iconCalendario from "../../../assets/iconCalendario.png";
+import iconCalendario from "../../../assets/IconCalendario.png";
 import iconReloj from "../../../assets/iconReloj.webp";
 import fondoHeader      from "../../../assets/FondoHeaderPiscina.png";
 
-import masaje from "../../../assets/masaje2.jpeg";
+import masaje from "../../../assets/Masaje2.jpeg";
 import CitasHorario from "./ReservacionHorario.jsx";
 import CitasDatos from './ReservacionDatos.jsx';
 

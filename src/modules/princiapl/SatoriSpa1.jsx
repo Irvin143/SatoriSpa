@@ -16,9 +16,9 @@ import iconCalendario   from "../../assets/IconCalendario.png";
 import iconFacebook     from "../../assets/IconFacebook.png";
 import iconInsta        from "../../assets/iconInsta.webp";
 import iconTiktok       from "../../assets/iconTiktok.png";
-import corazonBenficios from "../../assets/CorazonBeneficios.png";
+import corazonBenficios from "../../assets/corazonBeneficios.png";
 import florBeneficios from "../../assets/florBeneficios.png";
-import iconBeneficios from "../../assets/IconBeneficios.png";
+import iconBeneficios from "../../assets/iconBeneficios.png";
 
 /* ─── Estilos globales que no tienen equivalente en Tailwind ──────────────── */
 const globalStyles = `

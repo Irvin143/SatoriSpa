@@ -74,9 +74,9 @@ function ReservacionDatos() {
                         <Input titulo="Correo electronico" textoFondo="Juan@gmail.com" tipo={"email"}/>
                         <Input titulo="Teléfono" textoFondo="ej. 55 1234 5678" tipo={"text"}/>
                         <Input titulo="Especificaciones extras" textoFondo="ej. Alergias, tratamiento especial" tipo={"text"}/>
-                        <button className="w-[90%] bg-[#655e57] text-white py-4 mt-5 rounded-[25px] backdrop-blur-md  text-sm font-bold hover:cursor-pointer hover:bg-[#655e57]/70 transition-all duration-300 " disabled={!servicioSeleccionado} onClick={() => setOrdenSeleccionado(3)}>
+                        <Link className="w-[90%] bg-[#655e57] text-white text-center py-4 mt-5 rounded-[25px] backdrop-blur-md  text-sm font-bold hover:cursor-pointer hover:bg-[#655e57]/70 transition-all duration-300 " disabled={!servicioSeleccionado} onClick={() => setOrdenSeleccionado(3)}>
                             CONFIRMAR DATOS
-                        </button> 
+                        </Link> 
                     </form>
                     <article className='flex items-center justify-center gap-2 mt-5 text-[0.9em]'>
                         <img src={iconEscudo} alt="" className='w-[20px] ' />

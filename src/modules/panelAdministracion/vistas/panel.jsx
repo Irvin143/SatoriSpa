@@ -11,6 +11,7 @@ import fondoRituales from "../../../assets/Panels/fondoRituales.jpg";
 import logoSatori from "../../../assets/logoSatori.jpeg";
 
 import iconCalendario from "../../../assets/iconCalendario.png";
+import iconCalendarioBlanco from "../../../assets/Panels/iconCalendarioBlanco.png";
 import iconRituales from "../../../assets/panels/iconRitualAside.png";
 
 function Panel() {
@@ -44,15 +45,15 @@ function Panel() {
             >
                 <article className='px-2 py-3 flex justify-between w-full items-center lg:flex-col  gap-5'>
                     <img src={logoSatori} alt="Logo Satori" className='hidden lg:flex w-[60px] ' />
-                    <BotonAside texto="CITAS" imagen={iconCalendario} btnSeleccionado={btnAsideSelect} onClick={() => setBtnAsideSelect("CITAS")} />
-                    <BotonAside texto="RITUALES" imagen={iconRituales} btnSeleccionado={btnAsideSelect} onClick={() => setBtnAsideSelect("RITUALES")} />
-                    <BotonAside texto="SANTUARIO" imagen={iconCalendario} btnSeleccionado={btnAsideSelect} onClick={() => setBtnAsideSelect("SANTUARIO")} />
-                    <BotonAside texto="EMPLEADOS" imagen={iconCalendario} btnSeleccionado={btnAsideSelect} onClick={() => setBtnAsideSelect("EMPLEADOS")} />
-                    <BotonAside texto="CONFIGURACION" imagen={iconCalendario} btnSeleccionado={btnAsideSelect} onClick={() => setBtnAsideSelect("CONFIGURACION")} />
+                    <BotonAside texto="CITAS" imagen={iconCalendario} imagenSecundario = {iconCalendarioBlanco} btnSeleccionado={btnAsideSelect} onClick={() => setBtnAsideSelect("CITAS")} />
+                    <BotonAside texto="RITUALES" imagen={iconRituales} imagenSecundario = {iconRituales} btnSeleccionado={btnAsideSelect} onClick={() => setBtnAsideSelect("RITUALES")} />
+                    <BotonAside texto="SANTUARIO" imagen={iconCalendario} imagenSecundario = {iconCalendarioBlanco} btnSeleccionado={btnAsideSelect} onClick={() => setBtnAsideSelect("SANTUARIO")} />
+                    <BotonAside texto="EMPLEADOS" imagen={iconCalendario} imagenSecundario = {iconCalendarioBlanco} btnSeleccionado={btnAsideSelect} onClick={() => setBtnAsideSelect("EMPLEADOS")} />
+                    <BotonAside texto="CONFIGURACION" imagen={iconCalendario} imagenSecundario = {iconCalendarioBlanco} btnSeleccionado={btnAsideSelect} onClick={() => setBtnAsideSelect("CONFIGURACION")} />
                 </article>
                 <article className='hidden lg:flex lg:flex-col lg:items-center'>
                     <img src={logoSatori} alt="Logo Satori" className='w-[60px] ' />
-                    <span>Cerrar Sesion</span>
+                    <Link to="/principal">Cerrar Sesion</Link>
                 </article>
             </aside>
             
@@ -69,7 +70,7 @@ function Panel() {
     );
 }
 
-function BotonAside({ texto, imagen, btnSeleccionado, onClick }){
+function BotonAside({ texto, imagen, imagenSecundario, btnSeleccionado, onClick }){
     return (
         <Link
             to = {`/administracion/${texto}`}
@@ -81,12 +82,12 @@ function BotonAside({ texto, imagen, btnSeleccionado, onClick }){
                 transition-all duration-300
                 ${
                 btnSeleccionado === texto
-                    ? "font-bold shadow-black/20 scale-105 bg-[#655e57]/70 text-white"
+                    ? "font-bold shadow-black/20 scale-105 bg-[#655e57]/90 text-white"
                     : "hover:scale-105 hover:bg-[#655e57]/50 hover:text-white hover:font-bold"
                 }
             `}
             >
-                <img src={imagen} alt=""  className={`w-[50px] h-[50px]  rounded-[15px] p-2 `}/>
+                <img src={btnSeleccionado === texto ? imagenSecundario : imagen} alt=""  className={`w-[50px] h-[50px]  rounded-[15px] p-2 `}/>
                 {texto}
         </Link>
     );

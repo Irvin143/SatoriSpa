@@ -141,20 +141,19 @@ export default function CitasHorario() {
                         ${horarioSeleccionado  && fechaSeleccionada ? 'bg-[#655e57]' : ''}    `}
                         disabled={!horarioSeleccionado  || !fechaSeleccionada} 
                         onClick={(e) => {
-                        if(!servicioSeleccionado){
-                            setEstadoError(true);
-                            e.preventDefault();
-                        }else{
-                            setEstadoError(false);
-                            setOrdenSeleccionado(3);
-                        }
-                    }}
+                            if(!horarioSeleccionado  || !fechaSeleccionada){
+                                e.preventDefault();
+                                setEstadoError(true);
+                            }else{
+                                setOrdenSeleccionado(3);
+                                setEstadoError(false);
+                            }
+                        }}
                     >
                             CONFIRMAR FECHA
                     </Link> 
 
                 </article>
-                {/* Resumen de selección */}
 
                 <CardError titulo="Campos requeridos" mensaje="Escoge un horario o fecha." estado = {estadoError}/>
 
