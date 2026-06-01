@@ -8,7 +8,9 @@ import fondoHeader from "../../../assets/FondoHeader.jpeg";
 import estrellas from "../../../assets/Citas/estrellas.jpg";
 import iconCalendario from "../../../assets/iconCalendario.png";
 import iconReloj from "../../../assets/iconReloj.webp";
-import ResumenSeleccion  from '../../../Components.jsx';
+
+
+import { ResumenSeleccion,CardError }  from '../../../Components.jsx';
 
 export default function CitasHorario() {
     const {servicioSeleccionado, servicios, setOrdenSeleccionado, 
@@ -21,6 +23,8 @@ export default function CitasHorario() {
     const [fecha, setFecha] = useState(new Date());
     const [seleccionado, setSeleccionado] = useState(null);
     const [fechaSeleccionada, setFechaSeleccionada] = useState(null);
+        
+    const [estadoError, setEstadoError] = useState(false);
 
     
     setDiaText(fechaSeleccionada ?  fechaSeleccionada?.toLocaleDateString("es-MX", {weekday: "long"}) +', ': 'Sin fecha seleccionada' );
@@ -53,6 +57,7 @@ export default function CitasHorario() {
                 className={`my-5 ml-5 text-[1.2em] `} onClick={() => setOrdenSeleccionado(1)}>
                 ← Regresar
             </Link>
+
             <h2 className='text-[2em] font-bold'>Elije tu momento</h2>
             <p className='mb-6 lg:mb-0 '>Sincroniza tu paz interior con los ritmos del santuario</p>
 
@@ -136,9 +141,12 @@ export default function CitasHorario() {
                         ${horarioSeleccionado  && fechaSeleccionada ? 'bg-[#655e57]' : ''}    `}
                         disabled={!horarioSeleccionado  || !fechaSeleccionada} 
                         onClick={(e) => {
-                        setOrdenSeleccionado(3);
                         if(!servicioSeleccionado){
+                            setEstadoError(true);
                             e.preventDefault();
+                        }else{
+                            setEstadoError(false);
+                            setOrdenSeleccionado(3);
                         }
                     }}
                     >
@@ -147,6 +155,8 @@ export default function CitasHorario() {
 
                 </article>
                 {/* Resumen de selección */}
+
+                <CardError titulo="Campos requeridos" mensaje="Escoge un horario o fecha." estado = {estadoError}/>
 
                 {/* Resumen de selección para desktop */}
                 <article className='hidden lg:flex lg:flex-col w-[40%] text-[1em] bg-[#f4f0ea]/80 backdrop-blur-md rounded-[25px] border-1 border-white'>
@@ -179,9 +189,10 @@ export default function CitasHorario() {
                             onClick={(e) => {
                                 if(!horarioSeleccionado  || !fechaSeleccionada){
                                     e.preventDefault();
+                                    setEstadoError(true);
                                 }else{
                                     setOrdenSeleccionado(3);
-                                    
+                                    setEstadoError(false);
                                 }
                             }}
                         >

@@ -3,10 +3,15 @@ import { useOutletContext,Link } from "react-router-dom";
 
 import fondoCitas from "../../../assets/FondoCitas.png";
 
+import { CardError }  from '../../../Components.jsx';
+
 export default function ReservacionSevicios(){
     const {servicioSeleccionado, setServicioSeleccionado, setOrdenSeleccionado, servicios} = useOutletContext();
 
     const [validacion, setValidacion] = useState(true);
+
+    const [estadoError, setEstadoError] = useState(false);
+
     return(
         <section className={`relative min-h-screen `}>
             {/* FONDO */}
@@ -16,7 +21,7 @@ export default function ReservacionSevicios(){
             ></div>
 
             {/* CONTENIDO */}
-            <div className="relative z-10">
+            <div className="relative">
                 <SubTitulo titulo="Rituales de Bienestar" id="rituales" subtitulo="Elige el ritual que deseas reservar"  />
 
                 <article className='lg:grid lg:grid-cols-3 lg:gap-6 lg:justify-items-center'>  
@@ -35,6 +40,8 @@ export default function ReservacionSevicios(){
                     />
                 ))}
                 </article>
+
+                <CardError titulo="Campos requeridos" mensaje="Completa todos los campos requeridos." estado = {estadoError}/>
 
                 <article className="sticky bottom-0 text-[#655e57] bg-[#f3f3f3] w-full p-4 rounded-t-4xl border-t border-[rgba(200,200,200,0.5)] flex flex-col  items-center justify-around lg:lg:flex-row lg:p-8">
                     <article className={` w-full flex justify-between px-4  items-center lg:w-[70%] ${servicioSeleccionado ? 'block' : 'hidden'}`}>
@@ -61,8 +68,9 @@ export default function ReservacionSevicios(){
                         onClick={(e) => {
                             if(!servicioSeleccionado){
                                 e.preventDefault();
-                                setValidacion(false);
+                                setEstadoError(true);
                             }else{
+                                setEstadoError(false);
                                 setOrdenSeleccionado(2);
                             }
                         }}

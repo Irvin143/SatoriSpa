@@ -69,10 +69,9 @@ function Citas() {
     },  ];
   return (
       <div className='relative'>
-        
           {/* SECCION HEADER */}
-        <section className='fixed top-0 w-full z-50'>
-          <header className=" top-0 w-full z-50 
+        <section className='fixed top-0 w-full z-15'>
+          <header className=" top-0 w-full 
             grid [grid-template-columns:auto_1fr_auto] 
             [grid-template-areas:'hamburguesa_logo_extra'_'nav_nav_nav'_'orden_orden_orden'] 
             items-center px-6
@@ -91,37 +90,34 @@ function Citas() {
               </button>
             </article>
 
-              <nav id="menuNav"
-              className={`[grid-area:nav] flex-col items-center justify-center border-t border-[rgba(200,200,200,0.5)] lg:border-t-0 lg:text-xl lg:flex lg:flex-row lg:items-center lg:justify-center lg:m-0 ${
-                  menuAbierto ? "flex" : "hidden"}`}>
-                    <Link to="/principal"
-                  className="no-underline text-[#655e57] font-bold transition-all duration-300 p-2 lg:px-8">
-                    ← Volver al inicio </Link>
-              </nav>
+            <nav id="menuNav"
+            className={`[grid-area:nav] flex-col items-center justify-center border-t border-[rgba(200,200,200,0.5)] lg:border-t-0 lg:text-xl lg:flex lg:flex-row lg:items-center lg:justify-center lg:m-0 ${
+                menuAbierto ? "flex" : "hidden"}`}>
+                  <Link to="/principal"
+                className="no-underline text-[#655e57] font-bold transition-all duration-300 p-2 lg:px-8">
+                  ← Volver al inicio </Link>
+            </nav>
 
-              <img src={logoSatori} alt="Logo Satori" className="[grid-area:logo] w-[100px] justify-self-center lg:w-[120px]" />
+            <img src={logoSatori} alt="Logo Satori" className="[grid-area:logo] w-[100px] justify-self-center lg:w-[120px]" />
 
-              <article className="
-                [grid-area:extra] 
-                w-10 h-10 lg:w-[50px] lg:h-[50px]
-
-                border border-[#655e57]/40
-                rounded-full 
-                flex items-center justify-center
-
-                hover:bg-[#655e57] transition
-              ">
-                <img src={florBeneficios} alt="" className="w-[22px] opacity-70" />
+            <article className="
+              [grid-area:extra] 
+              w-10 h-10 lg:w-[50px] lg:h-[50px]
+              border border-[#655e57]/40
+              rounded-full 
+              flex items-center justify-center
+              hover:bg-[#655e57] transition
+            ">
+              <img src={florBeneficios} alt="" className="w-[22px] opacity-70" />
+            </article>
+            
+            <article className="w-full  flex items-center justify-center py-5 [grid-area:orden] gap-6 lg:gap-16  "> 
+              <Paso numero={1} texto="Ritual" activo={ordenSeleccionado === 1} />
+              <Paso numero={2} texto="Horario" activo={ordenSeleccionado === 2} />
+              <Paso numero={3} texto="Datos" activo={ordenSeleccionado === 3} /> 
               </article>
-              
-              <article className="w-full z-40 flex items-center justify-center py-5 [grid-area:orden] gap-6 lg:gap-16  "> 
-                <Paso numero={1} texto="Ritual" activo={ordenSeleccionado === 1} />
-                <Paso numero={2} texto="Horario" activo={ordenSeleccionado === 2} />
-                <Paso numero={3} texto="Datos" activo={ordenSeleccionado === 3} /> 
-                </article>
           </header>
-
-          </section>
+        </section>
           
         <Outlet context = {{
           servicioSeleccionado,
@@ -150,9 +146,6 @@ function LinkNav({ referencia, texto }) {
     >{texto}</a>
   );
 }
-
-  
-
 
 function CirculoNumero({ numero, activo }) {
   return (
@@ -189,9 +182,5 @@ function Paso({ numero, texto, activo }) {
     </article>
   );
 }
-
-
-
-
 
 export default Citas;
