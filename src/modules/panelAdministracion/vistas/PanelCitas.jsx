@@ -10,7 +10,7 @@ export default function PanelCitas({btnAsideSelect}){
     const [btnFiltroSelect ,setBtnFiltroSelect] = useState("TODAS");
 
     return(
-        <section className={`${btnAsideSelect === 'CITAS' ? 'block' : 'hidden'} transition-all duration-300 p-5 lg:p-0 w-full`}>
+        <section className={`transition-all duration-300 p-5 lg:p-0 w-full`}>
             <h2 className = "font-bold text-3xl my-5">
                 Gestion de Citas
             </h2>

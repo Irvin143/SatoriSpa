@@ -1,10 +1,12 @@
-import { UseState } from 'React';
+import { useState, UseState } from 'React';
 import { useOutletContext,Link } from "react-router-dom";
 
 import fondoCitas from "../../../assets/FondoCitas.png";
 
 export default function ReservacionSevicios(){
     const {servicioSeleccionado, setServicioSeleccionado, setOrdenSeleccionado, servicios} = useOutletContext();
+
+    const [validacion, setValidacion] = useState(true);
     return(
         <section className={`relative min-h-screen `}>
             {/* FONDO */}
@@ -34,31 +36,39 @@ export default function ReservacionSevicios(){
                 ))}
                 </article>
 
-                <article className="sticky bottom-0 text-[#655e57] bg-[#f3f3f3] w-full p-4 rounded-t-4xl border-t border-[rgba(200,200,200,0.5)] flex flex-col  items-center justify-center lg:lg:flex-row lg:p-8">
-                <article className={`flex justify-between px-4 w-full items-center ${servicioSeleccionado ? 'block' : 'hidden'}`}>
-                    <article >
-                    <p className='text-[0.8em] lg:text-[1em]'>Ritual Seleccionado:</p>
-                    <span className="font-bold">{servicios.find(s => s.id === servicioSeleccionado)?.nombre + ' - '}</span>
-                    <span className='text-[0.8em] '>{servicios.find(s => s.id === servicioSeleccionado)?.precio + ' Min'|| ''}</span>
+                <article className="sticky bottom-0 text-[#655e57] bg-[#f3f3f3] w-full p-4 rounded-t-4xl border-t border-[rgba(200,200,200,0.5)] flex flex-col  items-center justify-around lg:lg:flex-row lg:p-8">
+                    <article className={` w-full flex justify-between px-4  items-center lg:w-[70%] ${servicioSeleccionado ? 'block' : 'hidden'}`}>
+                        <article>
+                            <p className='text-[0.8em] lg:text-[1em]'>Ritual Seleccionado:</p>
+                            <span className="font-bold">{servicios.find(s => s.id === servicioSeleccionado)?.nombre + ' - '}</span>
+                            <span className='text-[0.8em] '>{servicios.find(s => s.id === servicioSeleccionado)?.precio + ' Min'|| ''}</span>
+                        </article>
+                        <article className='flex flex-col items-end'>
+                            <p>Total a pagar</p>
+                            <span className='font-bold'>${servicios.find(s => s.id === servicioSeleccionado)?.precio || 0}</span>
+                        </article>
                     </article>
-                    <article className='flex flex-col items-end'>
-                    <p>Total a pagar</p>
-                    <span className='font-bold'>${servicios.find(s => s.id === servicioSeleccionado)?.precio || 0}</span>
-                    </article>
-                </article>
-                <Link 
-                    to = "/reservacion/horario"
-                    className={`w-[90%] bg-[#9c9790] text-white text-center py-4 px-8 flex items-center justify-center  mt-5 rounded-[25px] backdrop-blur-md  text-sm font-bold hover:cursor-pointer hover:bg-[#655e57]/70 transition-all duration-300 disabled:opacity-50
-                    ${servicioSeleccionado  ? 'bg-[#655e57]' : ''}    `}
-                    onClick={(e) => {
-                        setOrdenSeleccionado(2);
-                        if(!servicioSeleccionado){
-                            e.preventDefault();
-                        }
-                    }}
-                >
-                        SELECCIONAR RITUAL
-                </Link> 
+                    <span className={`text-[#F00]
+                    ${!validacion && !servicioSeleccionado ? 'block text-4xl' : 'hidden'}`}
+                    >
+                        Seleccione un ritual
+                    </span>
+                    <Link 
+                        to = "/reservacion/horario"
+                        className={`w-[90%] mt-5  text-center text-white py-4 px-8 flex items-center justify-center   rounded-[25px] backdrop-blur-md  text-sm font-bold hover:cursor-pointer hover:bg-[#655e57]/70 transition-all duration-300 disabled:opacity-50 lg:mt-0 lg:w-[30%]
+                        ${servicioSeleccionado  ? 'bg-[#655e57]' : ''}
+                        ${!validacion && !servicioSeleccionado ? 'bg-[#FA2200]' : ' text-white bg-[#9c9790]'}`}
+                        onClick={(e) => {
+                            if(!servicioSeleccionado){
+                                e.preventDefault();
+                                setValidacion(false);
+                            }else{
+                                setOrdenSeleccionado(2);
+                            }
+                        }}
+                    >
+                            SELECCIONAR RITUAL
+                    </Link> 
                 </article>
             </div>
         </section >

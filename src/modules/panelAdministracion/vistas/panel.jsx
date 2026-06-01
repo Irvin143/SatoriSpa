@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 import "@fontsource/playfair-display";
 
@@ -34,6 +34,7 @@ function Panel() {
                     w-full
                     border border-white/30
                     lg:flex-col
+                    lg:justify-between
                     lg:w-auto 
                     lg:px-4 lg:py-5 
                     lg:shadow-[6px_0_12px_-4px_rgba(0,0,0,0.15)]
@@ -46,6 +47,8 @@ function Panel() {
                     <BotonAside texto="CITAS" imagen={iconCalendario} btnSeleccionado={btnAsideSelect} onClick={() => setBtnAsideSelect("CITAS")} />
                     <BotonAside texto="RITUALES" imagen={iconRituales} btnSeleccionado={btnAsideSelect} onClick={() => setBtnAsideSelect("RITUALES")} />
                     <BotonAside texto="SANTUARIO" imagen={iconCalendario} btnSeleccionado={btnAsideSelect} onClick={() => setBtnAsideSelect("SANTUARIO")} />
+                    <BotonAside texto="EMPLEADOS" imagen={iconCalendario} btnSeleccionado={btnAsideSelect} onClick={() => setBtnAsideSelect("EMPLEADOS")} />
+                    <BotonAside texto="CONFIGURACION" imagen={iconCalendario} btnSeleccionado={btnAsideSelect} onClick={() => setBtnAsideSelect("CONFIGURACION")} />
                 </article>
                 <article className='hidden lg:flex lg:flex-col lg:items-center'>
                     <img src={logoSatori} alt="Logo Satori" className='w-[60px] ' />
@@ -55,17 +58,11 @@ function Panel() {
             
                 
             <article className='flex flex-col mt-5 lg:px-10  items-center justify-center w-full'>
-                <header>
-                    <h1 className='text-2xl font-bold'>Panel de Administración</h1>
+                <header className='w-full bg-white'>
+                    <h1 className='text-2xl text-center font-bold '>Panel de Administración</h1>
                 </header>
 
-                <PanelRituales 
-                    btnAsideSelect={btnAsideSelect}
-                />
-    
-                <PanelCitas 
-                    btnAsideSelect={btnAsideSelect}
-                />
+                <Outlet/>
 
             </article>
         </div>
@@ -74,7 +71,8 @@ function Panel() {
 
 function BotonAside({ texto, imagen, btnSeleccionado, onClick }){
     return (
-        <button
+        <Link
+            to = {`/administracion/${texto}`}
             onClick={onClick}
             className={`
                 flex flex-col py-3 items-center w-full lg:py-0 lg:pr-20 lg:pl-2 lg:flex-row text-left rounded-full
@@ -83,14 +81,14 @@ function BotonAside({ texto, imagen, btnSeleccionado, onClick }){
                 transition-all duration-300
                 ${
                 btnSeleccionado === texto
-                    ? "font-bold shadow-black/20 scale-105 bg-[#655e57] text-white"
-                    : "hover:scale-105 hover:bg-[#655e57]/80 hover:text-white"
+                    ? "font-bold shadow-black/20 scale-105 bg-[#655e57]/70 text-white"
+                    : "hover:scale-105 hover:bg-[#655e57]/50 hover:text-white hover:font-bold"
                 }
             `}
             >
                 <img src={imagen} alt=""  className={`w-[50px] h-[50px]  rounded-[15px] p-2 `}/>
                 {texto}
-        </button>
+        </Link>
     );
 }
 

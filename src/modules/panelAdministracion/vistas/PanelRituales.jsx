@@ -15,7 +15,7 @@ function PanelRituales({btnAsideSelect}) {
     const [btnFiltroSelect ,setBtnFiltroSelect] = useState("TODOS");
 
     return(
-        <section className={`${btnAsideSelect === 'RITUALES' ? 'flex' : 'hidden'} text-[#655e57]  w-full flex flex-col items-center justify-start p-5`}>
+        <section className={`text-[#655e57]  w-full flex flex-col items-center justify-start p-5`}>
             <article className='lg:flex lg:items-center lg:justify-between lg:w-full lg:mb-10'>
                 <article>
                     <h2 className='font-bold text-3xl my-5'>Catalogo de Rituales</h2>
@@ -168,7 +168,7 @@ function CardServicio({ id, nombre, descripcion, onSeleccionar, tiempo = "60 min
                 </div> */}
                 <article className='flex items-center  justify-between'>
                     <span className="text-[1.2em] py-2 mt-3 font-bold w-[60%]">{nombre}</span>
-                    <article className='flex gap-6 w-[30%] lg:px-5 lg:w-[50%]  lg:justify-end '>
+                    <article className='flex mr-3 gap-6 w-[30%] lg:px-5 lg:m-0 lg:w-[50%]  justify-end '>
                         <button className="flex  group-hover:opacity-100 transition-opacity duration-300 hover:cursor-pointer">
                             <img src={iconLapiz} alt="Editar" className='w-[20px] h-[20px]' />
                         </button>

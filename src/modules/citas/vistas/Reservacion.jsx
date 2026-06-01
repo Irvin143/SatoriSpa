@@ -13,6 +13,7 @@ import masaje from "../../../assets/masaje2.jpeg";
 import CitasHorario from "./ReservacionHorario.jsx";
 import CitasDatos from './ReservacionDatos.jsx';
 
+import fondoCitas from "../../../assets/FondoCitas.png";
 
 function Citas() {
   const [servicioSeleccionado, setServicioSeleccionado] = useState(null);
@@ -67,7 +68,8 @@ function Citas() {
       img: masaje
     },  ];
   return (
-      <div>
+      <div className='relative'>
+        
           {/* SECCION HEADER */}
         <section className='fixed top-0 w-full z-50'>
           <header className=" top-0 w-full z-50 
@@ -120,7 +122,7 @@ function Citas() {
           </header>
 
           </section>
-
+          
         <Outlet context = {{
           servicioSeleccionado,
           setServicioSeleccionado,
