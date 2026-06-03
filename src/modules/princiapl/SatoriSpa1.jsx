@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../Auth/AuthContext";
 
 
 /* ─── Imágenes ────────────────────────────────────────────────────────────── */
@@ -84,6 +85,7 @@ const servicios = [
   },
 ];
 
+
 /* ─── Datos de contacto ───────────────────────────────────────────────────── */
 const contactoItems = [
   { icono: iconUbicacion,  label: "Direccion", valor: "Calle Serena 123, Culiacan, Sinaloa" },
@@ -103,6 +105,8 @@ const redes = [
 ══════════════════════════════════════════════════════════════════════════════ */
 export default function SatoriSpa() {
   const [menuAbierto, setMenuAbierto] = useState(false);
+
+  const { user, loading, signOut } = useAuth()
 
   return (
     <>
@@ -141,9 +145,19 @@ export default function SatoriSpa() {
           <article className="bg-[#696969] rounded-full flex items-center justify-center [grid-area:extra] my-[10px] w-10 h-10 lg:w-[50px] lg:h-[50px]">
             <img src={florBeneficios} alt="" className="w-[30px]" />
           </article>
-          <article className="[grid-area:login] hidden lg:flex">
-            <Link to="/login"  className="no-underline text-[#E5E0D8] font-bold  duration-300 p-2 hover:text-shadow-[0_0_5px_#FFFFFF,0_0_5px_#000] hover:cursor-pointer hover:underline hover:decoration-white hover:scale-110 lg:px-2">Iniciar Sesion</Link>
-            <Link to="/registro" className="no-underline text-[#E5E0D8] font-bold  duration-300 p-2 hover:text-shadow-[0_0_5px_#FFFFFF,0_0_5px_#000] hover:cursor-pointer hover:underline hover:decoration-white hover:scale-110 lg:px-2">Registrarse</Link>
+          <article className="[grid-area:login] hidden lg:flex lg:items-center lg:mx-2">
+            {user ? (
+              <>
+                <span className="text-[#E5E0D8] font-bold mr-4">{user.email}</span>
+                <button onClick={signOut} className="bg-[#E5E0D8] text-[#655e57] font-bold py-2 px-4 rounded-full hover:bg-[#E5E0D8]/80 transition duration-300">
+                  Cerrar Sesión
+                </button>
+              </> ) : (
+                <>
+                  <Link to="/login"  className="no-underline text-[#E5E0D8] font-bold  duration-300 p-2 hover:text-shadow-[0_0_5px_#FFFFFF,0_0_5px_#000] hover:cursor-pointer hover:underline hover:decoration-white hover:scale-110 lg:px-2">Iniciar Sesion</Link>
+                  <Link to="/registro" className="no-underline text-[#E5E0D8] font-bold  duration-300 p-2 hover:text-shadow-[0_0_5px_#FFFFFF,0_0_5px_#000] hover:cursor-pointer hover:underline hover:decoration-white hover:scale-110 lg:px-2">Registrarse</Link>
+                </>)
+              }
           </article>
         </header>
 

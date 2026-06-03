@@ -1,4 +1,4 @@
-import { useState, UseState } from 'React';
+import { useState, UseState } from 'react';
 import { useOutletContext,Link } from "react-router-dom";
 
 import fondoCitas from "../../../assets/fondoCitas.png";

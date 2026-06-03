@@ -12,10 +12,11 @@
   },
   "dependencies": {
     "@fontsource/playfair-display": "^5.2.8",
+    "@supabase/supabase-js": "^2.106.2",
     "animate.css": "^4.1.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-router-dom": "^7.14.1",
+    "react-router-dom": "^7.16.0",
     "recharts": "^3.8.1"
   },
   "devDependencies": {

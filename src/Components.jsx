@@ -47,7 +47,7 @@ export function ResumenSeleccion({servicios, servicioSeleccionado, diaText, diaN
 
 export function CardError({titulo, mensaje, estado = true}){
     return(
-        <section className={`fixed top-5 right-5 z-[99] animate__animated animate__fadeInRight ${!estado ? 'hidden' : ''}`}>
+        <section className={`fixed top-5 right-5 text-black z-[99] animate__animated animate__fadeInRight ${!estado ? 'hidden' : ''}`}>
             <article className='pl-2 bg-red-600 rounded-[20px] shadow-xl'>
                 <article className="flex items-center gap-4  bg-white backdrop-blur-md rounded-[15px] border-1 border-white px-6 py-3">
                     <p className="text-[1.5em] font-bold text-red-500 rounded-full w-[30px] h-[30px] flex items-center justify-center bg-red-200">!</p>
