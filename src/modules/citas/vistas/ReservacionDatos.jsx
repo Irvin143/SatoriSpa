@@ -4,10 +4,9 @@ import { useOutletContext,Link } from "react-router-dom";
 
 import {ResumenSeleccion,CardError }  from '../../../Components.jsx';
 
-
-import iconCandado from "../../../assets/panels/iconCandado.png";
-import fondoDatos from "../../../assets/panels/fondoDatos.png";
-import iconEscudo from "../../../assets/panels/iconEscudo.png";
+import iconCandado from "../../../assets/citas/iconCandado.png";
+import fondoDatos from "../../../assets/citas/fondoDatos.png";
+import iconEscudo from "../../../assets/citas/iconEscudo.png";
 
 function ReservacionDatos() {
     

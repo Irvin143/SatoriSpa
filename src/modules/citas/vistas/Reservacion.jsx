@@ -14,7 +14,6 @@ import fondoCitas from "../../../assets/fondoCitas.png";
 import CitasHorario from "./ReservacionHorario.jsx";
 import CitasDatos from './ReservacionDatos.jsx';
 
-
 function Citas() {
   const [servicioSeleccionado, setServicioSeleccionado] = useState(null);
   const [menuAbierto, setMenuAbierto] = useState(false);

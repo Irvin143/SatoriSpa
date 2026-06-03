@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { supabase } from '../supabase/supabase.js'
+import { iniciarSesion, registrarUsuario } from '../modules/login/services/authServices.js';
 
 const AuthContext = createContext(null)
 
@@ -23,10 +24,12 @@ export function AuthProvider({ children }) {
   }, [])
 
   const value = {
-    session,
-    user: session?.user ?? null,
-    loading: session === undefined,
-    signOut: () => supabase.auth.signOut(),
+      session,
+      user: session?.user ?? null,
+      loading: session === undefined,
+      signOut:      () => supabase.auth.signOut(),
+      iniciarSesion,
+      registrarUsuario,   // ← aquí
   }
 
   return (

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "@fontsource/playfair-display";
 
 import iconLupa from "../../../assets/iconLupa.png";
-import iconLapiz from "../../../assets/panels/iconLapiz.webp";
+import iconLapiz from "../../../assets/panels/iconLapiz.png";
 import iconEliminar from "../../../assets/panels/iconBasura.png";
 
 import { BotonFiltro } from '../componentesPanel/buttons.jsx';

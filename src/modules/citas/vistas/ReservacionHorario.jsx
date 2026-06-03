@@ -4,7 +4,6 @@ import { useOutletContext, Link } from "react-router-dom";
 
 import CitasDatos from './ReservacionDatos.jsx';
 
-
 import fondoHeader from "../../../assets/fondoHeader.jpeg";
 import iconCalendario from "../../../assets/iconCalendario.png";
 import iconReloj from "../../../assets/iconReloj.webp";
