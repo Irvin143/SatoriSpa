@@ -27,7 +27,7 @@ export function AuthProvider({ children }) {
       session,
       user: session?.user ?? null,
       loading: session === undefined,
-      signOut:      () => supabase.auth.signOut(),
+      signOut: () => supabase.auth.signOut(),
       iniciarSesion,
       registrarUsuario,   // ← aquí
   }

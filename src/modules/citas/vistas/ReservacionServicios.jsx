@@ -1,12 +1,34 @@
-import { useState, UseState } from 'react';
+import { useState, UseState, useEffect } from 'react';
 import { useOutletContext,Link } from "react-router-dom";
 
 import fondoCitas from "../../../assets/fondoCitas.png";
 
 import { CardError }  from '../../../Components.jsx';
+import { obtenerServicios } from '../services/useCita.js';
+
+import masaje from "../../../assets/masaje2.jpeg";
+
 
 export default function ReservacionSevicios(){
-    const {servicioSeleccionado, setServicioSeleccionado, setOrdenSeleccionado, servicios} = useOutletContext();
+  const {servicioSeleccionado, setServicioSeleccionado, setOrdenSeleccionado, servicios, setServicios} = useOutletContext();
+
+  const [cargando, setCargando] = useState(true);
+
+  useEffect(() => {
+
+      const cargarServicios = async () => {
+        setCargando(true);
+        const result = await obtenerServicios()
+        if (result.success) {
+            setServicios(result.data);
+            console.log("Servicios cargados:", result.data);
+        } else {
+            console.error("Error al cargar servicios:", result.error);
+        }
+          setCargando(false);
+      }
+      cargarServicios();
+  }, []);
 
     const [validacion, setValidacion] = useState(true);
 
@@ -23,23 +45,23 @@ export default function ReservacionSevicios(){
             {/* CONTENIDO */}
             <div className="relative">
                 <SubTitulo titulo="Rituales de Bienestar" id="rituales" subtitulo="Elige el ritual que deseas reservar"  />
-
+              {cargando ? <SkeletonServicios /> :  
                 <article className='lg:grid lg:grid-cols-3 lg:gap-6 lg:justify-items-center'>  
-                {servicios.map((servicio) => (
-                <CardServicio
-                    key={servicio.id}
-                    id={servicio.id}
-                    nombre={servicio.nombre}
-                    descripcion={servicio.descripcion}
-                    tiempo={servicio.tiempo}
-                    categoria={servicio.categoria}
-                    precio={servicio.precio}
-                    activo={servicioSeleccionado === servicio.id}
-                    img = {servicio.img}
-                    onSeleccionar={() => setServicioSeleccionado(servicio.id)}
-                    />
-                ))}
-                </article>
+                  {servicios.map((servicio) => (
+                    <CardServicio
+                        key={servicio.id}
+                        id={servicio.id}
+                        nombre={servicio.nombre}
+                        descripcion={servicio.descripcion}
+                        tiempo={servicio.duracion}
+                        categoria={servicio.categoria}
+                        precio={servicio.precio}
+                        activo={servicioSeleccionado === servicio.id}
+                        img = {servicio.img}
+                        onSeleccionar={() => setServicioSeleccionado(servicio.id)}
+                        />
+                  ))}
+                </article>}
 
                 <CardError titulo="Campos requeridos" mensaje="Completa todos los campos requeridos." estado = {estadoError}/>
 
@@ -122,7 +144,7 @@ function CardServicio({ id, nombre, descripcion, activo, onSeleccionar, tiempo =
               {categoria}
             </span>
             <p className=" bg-[#f5f0e9] py-1 px-2 rounded-[40px]">
-              {tiempo}
+              {tiempo} min
             </p>
           </article>
         </div>
@@ -144,4 +166,24 @@ function CardServicio({ id, nombre, descripcion, activo, onSeleccionar, tiempo =
       </article>
     </article>
   )
+}
+
+function SkeletonServicios() {
+    return (
+        <article className="grid grid-cols-1 gap-8  mx-10 lg:grid-cols-3 ">
+            {[...Array(3)].map((_, i) => (
+                <div key={i} className="bg-white rounded-[25px] p-6 shadow-md animate-pulse">
+                    {/* imagen */}
+                    <div className="w-full h-40 bg-gray-200 rounded-[15px] mb-4" />
+                    {/* título */}
+                    <div className="h-5 bg-gray-200 rounded-full w-[60%] mb-3" />
+                    {/* descripción */}
+                    <div className="h-3 bg-gray-200 rounded-full w-full mb-2" />
+                    <div className="h-3 bg-gray-200 rounded-full w-[80%] mb-4" />
+                    {/* precio */}
+                    <div className="h-5 bg-gray-200 rounded-full w-[30%]" />
+                </div>
+            ))}
+        </article>
+    );
 }

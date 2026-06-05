@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, Outlet } from "react-router-dom";
 
 import logoSatori from "../../../assets/logoSatori.jpeg";
@@ -14,58 +14,23 @@ import fondoCitas from "../../../assets/fondoCitas.png";
 import CitasHorario from "./ReservacionHorario.jsx";
 import CitasDatos from './ReservacionDatos.jsx';
 
+import { obtenerServicios } from '../services/useCita.js';
+
 function Citas() {
+
   const [servicioSeleccionado, setServicioSeleccionado] = useState(null);
   const [menuAbierto, setMenuAbierto] = useState(false);
   const [ordenSeleccionado, setOrdenSeleccionado] = useState(1);
+  
+  const [fecha, setFecha] = useState(new Date());
   
   const [horarioSeleccionado, setHorarioSeleccionado] = useState(null);
   const [diaText, setDiaText] = useState("");
   const [diaNumber, setDiaNumber] = useState(0);
   const [mes, setMes] = useState(0);
 
+  const [servicios, setServicios] = useState([]);
 
-  const servicios = [
-    {
-      id: 1,
-      nombre: "Masaje Reductivo",
-      descripcion:
-        "Disfruta de un masaje relajante que aliviará tu estrés y tensión acumulada, dejándote renovado y revitalizado.",
-      tiempo: "60 min",
-      categoria: "Masaje",
-      precio: "70",
-      img: logoSatori
-    },
-    {
-      id: 2,
-      nombre: "Reductivo Corporal",
-      descripcion:
-        "Disfruta de un masaje relajante que aliviará tu estrés y tensión acumulada, dejándote renovado y revitalizado.",
-      tiempo: "70 min",
-      categoria: "Masaje",
-      precio: "80",
-      img: masaje
-    }, 
-    {
-      id: 3,
-      nombre: "Ritual de relajación",
-      descripcion:
-        "Disfruta de un masaje relajante que aliviará tu estrés y tensión acumulada, dejándote renovado y revitalizado.",
-      tiempo: "70 min",
-      categoria: "Masaje",
-      precio: "80",
-      img: masaje
-    }, 
-    {
-      id: 4,
-      nombre: "Maderoterapia",
-      descripcion:
-        "Disfruta de un masaje relajante que aliviará tu estrés y tensión acumulada, dejándote renovado y revitalizado.",
-      tiempo: "70 min",
-      categoria: "Masaje",
-      precio: "80",
-      img: masaje
-    },  ];
   return (
       <div className='relative'>
           {/* SECCION HEADER */}
@@ -123,8 +88,10 @@ function Citas() {
           setServicioSeleccionado,
           setOrdenSeleccionado, 
           servicios,
+          setServicios,
           horarioSeleccionado,
           setHorarioSeleccionado,
+          fecha,setFecha,
           diaText,
           setDiaText,
           diaNumber,

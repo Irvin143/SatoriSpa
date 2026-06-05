@@ -8,23 +8,61 @@ import fondoHeader from "../../../assets/fondoHeader.jpeg";
 import iconCalendario from "../../../assets/iconCalendario.png";
 import iconReloj from "../../../assets/iconReloj.webp";
 
-
+import { obtenerHorariosDisponibles } from '../services/useCita.js';
 import { ResumenSeleccion,CardError }  from '../../../Components.jsx';
 
 export default function CitasHorario() {
-    const {servicioSeleccionado, servicios, setOrdenSeleccionado, 
+    const { servicioSeleccionado,  servicios, setOrdenSeleccionado,
         horarioSeleccionado, setHorarioSeleccionado,
-        diaText ,setDiaText,
+        diaText, setDiaText,
         diaNumber, setDiaNumber,
-        mes,setMes
+        mes, setMes,
+        fecha, setFecha
     } = useOutletContext();
 
-    const [fecha, setFecha] = useState(new Date());
-    const [seleccionado, setSeleccionado] = useState(null);
+
+    // ✅ Estados primero, antes de cualquier uso
     const [fechaSeleccionada, setFechaSeleccionada] = useState(null);
-        
     const [estadoError, setEstadoError] = useState(false);
 
+    // ✅ Horarios fijos definidos aquí
+    const horarios = [
+        "6:00","9:00", "10:00", "11:00", "12:00",
+        "13:00", "14:00", "15:00", "16:00",
+        "17:00", "18:00"
+    ];
+
+    const [horariosOcupados, setHorariosOcupados] = useState([]);
+
+
+    const mostrarHorarios = async (fecha) => {
+        if (!fecha) {
+            setEstadoError(true);
+            return [];
+        }
+        const fechaFormateada = formatearFecha(fecha);
+        const  citasRaw = await obtenerHorariosDisponibles(fechaFormateada);
+        if (!citasRaw.success) {
+            setEstadoError(true);
+            return [];
+        }
+        const citas = Array.isArray(citasRaw) ? citasRaw : citasRaw?.data ?? citasRaw?.citas ?? [];
+        setHorariosOcupados(fecha
+            ? citas
+            .filter(cita => cita.fechaCita === fechaFormateada)
+            .map(cita => cita.hora)
+            : []);
+        setEstadoError(false);
+    }
+
+    const formatearFecha = (fecha) => {
+        const y = fecha.getFullYear();
+        const m = String(fecha.getMonth() + 1).padStart(2, '0');
+        const d = String(fecha.getDate()).padStart(2, '0');
+        return `${y}-${m}-${d}`;
+    };
+
+    const [seleccionado, setSeleccionado] = useState(null);
     
     setDiaText(fechaSeleccionada ?  fechaSeleccionada?.toLocaleDateString("es-MX", {weekday: "long"}) +', ': 'Sin fecha seleccionada' );
     setDiaNumber(fechaSeleccionada ? fechaSeleccionada.getDate() : 0);
@@ -76,17 +114,18 @@ export default function CitasHorario() {
                         <span>LU</span><span>MA</span><span>MI</span>
                         <span>JU</span><span>VI</span><span>SA</span><span>DO</span>
                     </article>
-
-                    {/* Fechas */}
-                    <article className="grid grid-cols-7 text-center text-sm">
-                        {/* espacios vacíos */}
+                    <article className="grid grid-cols-7 text-center">
                         {[...Array(start)].map((_, i) => (
-                        <div key={i}></div>
+                            <div key={i} className="p-2 m-[4px] rounded-full w-8 h-8 lg:w-10 lg:h-10"></div>
                         ))}
-
-                        {/* días */}
-                        {[...Array(lastDate)].map((_, i) => {
+                    {/* Fechas */}
+                    {[...Array(lastDate)].map((_, i) => {
                         const dia = i + 1;
+                        const hoy = new Date();
+                        hoy.setHours(0, 0, 0, 0);
+                        const fechaCompleta = new Date(year, month, dia);
+                        const esPasado = fechaCompleta < hoy;
+
                         const esSeleccionado =
                             fechaSeleccionada &&
                             fechaSeleccionada.getDate() === dia &&
@@ -97,33 +136,45 @@ export default function CitasHorario() {
                             <article
                             key={dia}
                             onClick={() => {
-                                const fechaCompleta = new Date(year, month, dia);
+                                if (esPasado) return; // ← bloquea el click
                                 setFechaSeleccionada(fechaCompleta);
+                                mostrarHorarios(fechaCompleta); 
                             }}
-                            className={`p-2 m-[4px] rounded-full cursor-pointer w-8 h-8  transition duration-300 flex items-center justify-center lg:w-10 lg:h-10 lg:text-[1.2em]
-                            ${esSeleccionado ? "bg-[#cfcac4] font-bold text-[1.2em]" : "hover:bg-[#655e57]/10 "}
+                            className={`p-2 m-[4px] rounded-full w-8 h-8 transition duration-300 flex items-center justify-center lg:w-10 lg:h-10 lg:text-[1.2em]
+                                ${esPasado
+                                ? "text-gray-600 cursor-not-allowed bg-gray-300"                          // ← días pasados
+                                : esSeleccionado
+                                    ? "bg-[#cfcac4] font-bold text-[1.2em] cursor-pointer"     // ← seleccionado
+                                    : "hover:bg-[#655e57]/10 cursor-pointer"                   // ← disponible
+                                }
                             `}
                             >
                             {dia}
                             </article>
                         );
-                        })}
+                        })}                    
                     </article>
                 </article>
 
 
-                    {/* Horarios */}
-                <article >
-                    <p className=' font-bold text-[0.8em] mt-5'>SESIONES MATUTINAS</p>
-                    <article className='flex gap-4 m-5'>
-                        <BtnHorario key="matutina-1" hora="8:00" onSeleccionar={() => setHorarioSeleccionado("8:00")} activo={horarioSeleccionado == "8:00"} />
-                        <BtnHorario key="matutina-2" hora="9:00" onSeleccionar={() => setHorarioSeleccionado("9:00")} activo={horarioSeleccionado == "9:00"} />
-                    </article>
-                    <p className=' font-bold text-[0.8em] mt-10'>SESIONES VESPERTINAS</p>
-                    <article className='flex gap-4 m-5'>
-                        <BtnHorario key="vespertina-1" hora="5:00" onSeleccionar={() => setHorarioSeleccionado("5:00")} activo={horarioSeleccionado === "5:00"} />
-                        <BtnHorario key="vespertina-2" hora="6:00" onSeleccionar={() => setHorarioSeleccionado("6:00")} activo={horarioSeleccionado === "6:00"} />
-                    </article>
+                {/* Horarios */}
+                <article className = 'lg:w-[50%] gap-5 flex flex-col items-center justify-start mt-10 lg:mt-0'>
+                    <span className='lg:text-[1.2em]  '>Selecciona tu horario</span>
+                    {fechaSeleccionada ? (
+                        <article className="grid grid-cols-3 mt-5 gap-2 ">
+                            {horarios.map((hora) => (
+                                <BtnHorario
+                                    key={hora}
+                                    hora={hora}
+                                    onSeleccionar={() => setHorarioSeleccionado(hora)}
+                                    activo={horarioSeleccionado === hora}
+                                    ocupado={horariosOcupados.includes(hora)}
+                                />
+                            ))}  
+                        </article>
+                    ) : (
+                        <p className='text-sm text-[#F00]'>Selecciona una fecha para ver los horarios disponibles</p>
+                    )}
                 </article>
                 <article className='sticky bottom-0 flex flex-col justify-center items-center lg:hidden'>
                     <ResumenSeleccion
@@ -203,10 +254,21 @@ export default function CitasHorario() {
     );
 }
 
-function BtnHorario({ hora, onSeleccionar,activo }) {
+function BtnHorario({ hora, onSeleccionar, activo, ocupado }) {
   return (
-    <button onClick={onSeleccionar} className={` text-[#655e57] rounded-[10px] backdrop-blur-md hover:bg-[#9c9790] hover:text-white/80 hover:cursor-pointer transition-all duration-100 lg:px-14 ${activo ? 'bg-[#655e57] text-white/80 px-7' : 'bg-[#FFF] py-3 px-6 '}`}>
-      {hora}
-    </button>
-  );
+        <button
+        onClick={() => { if (ocupado) return; onSeleccionar(); }}
+        disabled={ocupado}
+        className={`text-[#655e57] rounded-[10px] backdrop-blur-md transition-all duration-100 lg:mb-5 lg:px-8 mx-3 w-[80px] h-[40px] flex items-center justify-center text-sm
+            ${ocupado
+            ? "bg-gray-100 text-gray-300 cursor-not-allowed py-3 px-6"
+            : activo
+                ? "bg-[#655e57] text-white/80 px-7 hover:bg-[#9c9790] hover:cursor-pointer"
+                : "bg-[#FFF] py-3 px-6 hover:bg-[#9c9790] hover:text-white/80 hover:cursor-pointer"
+            }
+        `}
+        >   
+        {hora}
+        </button>
+    );
 }

@@ -4,20 +4,92 @@ import { useOutletContext,Link } from "react-router-dom";
 
 import {ResumenSeleccion,CardError }  from '../../../Components.jsx';
 
+import { useAuth } from '../../../Auth/AuthContext.jsx';
+
+import { crearCita } from '../services/useCita.js';
+
 import iconCandado from "../../../assets/citas/iconCandado.png";
 import fondoDatos from "../../../assets/citas/fondoDatos.png";
 import iconEscudo from "../../../assets/citas/iconEscudo.png";
 
 function ReservacionDatos() {
     
+    const [estadoError, setEstadoError] = useState(false);
+    const [mensajeError, setMensajeError] = useState("");
+
     const {servicios, servicioSeleccionado, setServicioSeleccionado, 
         diaText, diaNumber,mes,
         horarioSeleccionado,
-        setOrdenSeleccionado
+        setOrdenSeleccionado,
+        fecha, setFecha
         } = useOutletContext();
 
-    const [estadoError, setEstadoError] = useState(false);
-    
+    const { user } = useAuth();
+
+    const [formulario, setFormulario] = useState({
+        nombre: "",
+        correo: "",
+        telefono: "",
+        especificaciones: ""
+    });
+
+    const citaNueva = {
+        idUsuario: user?.id || null,
+        idServicio: servicioSeleccionado,
+        nombreCliente: formulario.nombre,
+        fechaCita: fecha.toISOString().split('T')[0],
+        hora: horarioSeleccionado || "",
+        especificaciones: formulario.especificaciones
+    }
+
+    const handleChange = (e) => {
+        if (e.target.name === "telefono" && !/^\d*$/.test(e.target.value)) return;
+        if (e.target.name === "telefono" && e.target.value.length > 10) return;
+        setFormulario({
+            ...formulario,
+            [e.target.name]: e.target.value
+        });
+    }
+
+    const handleSubmit = async (e) => {
+        if (!validarFormulario()) {
+            setEstadoError(true);
+            return;
+        }
+
+        console.log("Datos de la cita a crear:", citaNueva);
+        
+        const resultado = await crearCita(citaNueva);
+
+        if (!resultado.success) {
+            setMensajeError("Error al crear la cita. Inténtalo de nuevo.");
+            setEstadoError(true);
+            console.error("Error al crear la cita:", resultado.error);
+        }
+        
+        setEstadoError(false);
+    }
+
+    const validarFormulario = () => {
+        if(formulario.nombre.trim() === "" || formulario.correo.trim() === "" || formulario.telefono.trim() === ""){
+            setMensajeError("Completa todos los campos requeridos");
+            return false;
+        }
+        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formulario.correo.trim())){
+            setMensajeError("El correo no es válido");
+            return false;
+        }
+        if(!/^\d{10}$/.test(formulario.telefono.trim())){
+            setMensajeError("El teléfono debe tener 10 dígitos");
+            return false;
+        }
+        if(!/^\d+$/.test(formulario.telefono.trim())){
+            setMensajeError("El teléfono debe contener solo números");
+            return false;
+        }
+        return true;
+    }
+
     return(
         <section
             className="min-h-screen text-[#655e57] p-8 pt-30 lg:p-20 bg-cover bg-left bg-no-repeat"
@@ -66,16 +138,16 @@ function ReservacionDatos() {
                         horarioSeleccionado={horarioSeleccionado}
                     />
                     
-                    <CardError titulo="Campos requeridos" mensaje="Completa todos los campos requeridos." estado = {estadoError}/>
+                    <CardError titulo="Campos requeridos" mensaje={mensajeError} estado = {estadoError}/>
 
                     <form action="submit" className='flex flex-col w-full bg-white p-5 rounded-[20px] shadow-xl'>
-                        <Input titulo="Nombre Completo" textoFondo="ej. Juan Pablo" tipo={"text"}/>
-                        <Input titulo="Correo electronico" textoFondo="Juan@gmail.com" tipo={"email"}/>
-                        <Input titulo="Teléfono" textoFondo="ej. 55 1234 5678" tipo={"text"}/>
-                        <Input titulo="Especificaciones extras" textoFondo="ej. Alergias, tratamiento especial" tipo={"text"}/>
-                        <Link className="w-[90%] bg-[#655e57] text-white text-center py-4 mt-5 rounded-[25px] backdrop-blur-md  text-sm font-bold hover:cursor-pointer hover:bg-[#655e57]/70 transition-all duration-300 " disabled={!servicioSeleccionado} onClick={() => setOrdenSeleccionado(3)}>
+                        <Input titulo="Nombre Completo" textoFondo="ej. Juan Pablo" tipo={"text"} valor={formulario.nombre} onChange={handleChange} name="nombre"/>
+                        <Input titulo="Correo electronico" textoFondo="Juan@gmail.com" tipo={"email"} valor={formulario.correo} onChange={handleChange} name="correo"/>
+                        <Input titulo="Teléfono" textoFondo="ej. 55 1234 5678" tipo={"text"} valor={formulario.telefono} onChange={handleChange} name="telefono"/>
+                        <Input titulo="Especificaciones extras (opcional)" textoFondo="ej. Alergias, tratamiento especial" tipo={"text"} valor={formulario.especificaciones} onChange={handleChange} name="especificaciones"/>
+                        <button type = "button" className="w-[90%] bg-[#655e57] text-white text-center py-4 mt-5 rounded-[25px] backdrop-blur-md  text-sm font-bold hover:cursor-pointer hover:bg-[#655e57]/70 transition-all duration-300 "  onClick={handleSubmit}>
                             CONFIRMAR DATOS
-                        </Link> 
+                        </button> 
                     </form>
                     <article className='flex items-center justify-center gap-2 mt-5 text-[0.9em]'>
                         <img src={iconEscudo} alt="" className='w-[20px] ' />
@@ -91,11 +163,15 @@ function ReservacionDatos() {
     );
 }
 
-function Input({titulo, textoFondo, tipo}){
+function Input({titulo, textoFondo, tipo, valor,onChange,name}) {
     return(
         <article className='flex flex-col'>
-            <label htmlFor="" className='font-bold'>{titulo}</label>
-            <input type={tipo} placeholder={textoFondo} className="px-1 py-3 mb-5 rounded-[10px] border-b border-gray-300  outline-none"  />
+            <label  className='font-bold'>{titulo}</label>
+            <input type={tipo} placeholder={textoFondo} 
+            className="px-1 py-3 mb-5 rounded-[10px] border-b border-gray-300  outline-none"
+            value={valor}
+            onChange={onChange} 
+            name={name} />
         </article>
     );
 }
