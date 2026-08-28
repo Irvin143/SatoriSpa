@@ -2,7 +2,10 @@ import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 
 import Principal from "../modules/princiapl/SatoriSpa1.jsx";
 
+import VerServicios from "../modules/servicios/vistas/VerServicios.jsx";
+
 import Reservacion from "../modules/citas/vistas/Reservacion.jsx";
+import MiReservacion from "../modules/citas/vistas/MiReservacion.jsx";
 import ReservacionHorario from "../modules/citas/vistas/ReservacionHorario.jsx";
 import ReservacionServicios from "../modules/citas/vistas/ReservacionServicios.jsx";
 import ReservacionDatos from "../modules/citas/vistas/ReservacionDatos.jsx";
@@ -19,7 +22,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Panel />} />
+        <Route path="/" element={<Principal />} />
 
         <Route path="/administracion" element={<Panel />}>
           <Route index element={<PanelCitas/>}/>
@@ -34,8 +37,13 @@ function App() {
         <Route path="/reservacion" element={<Reservacion/>}>
           <Route index element={<ReservacionServicios/>}/>
           <Route path="horario" element={<ReservacionHorario />} />
+          <Route path="horario/:id" element={<ReservacionHorario />} />
           <Route path="datos" element={<ReservacionDatos />} />
         </Route>
+
+        <Route path="/mi-reservacion" element={<MiReservacion />} />
+
+        <Route path="/servicios" element={<VerServicios />} />
 
       </Routes>
     </BrowserRouter>

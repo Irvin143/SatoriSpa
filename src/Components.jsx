@@ -1,10 +1,12 @@
+import { useEffect, useState } from "react";
+
 
 import estrellas from "./assets/Citas/estrellas.png";
 import iconCalendario from "./assets/iconCalendario.png";
 import iconReloj from "./assets/iconReloj.webp";
 
 
-export function ResumenSeleccion({servicios, servicioSeleccionado, diaText, diaNumber, mes, horarioSeleccionado}){
+export function ResumenSeleccion({nombreServicio, servicioSeleccionado, diaText, diaNumber, mes, horarioSeleccionado}){
     return(
         <article className={`sticky bottom-0  text-[#655e57] w-full pb-2 
             flex flex-col items-center `}>
@@ -16,7 +18,7 @@ export function ResumenSeleccion({servicios, servicioSeleccionado, diaText, diaN
                     </article>
                     <article className=''>
                         <p className='text-[0.8em]'>Servicio</p>
-                        <span className="font-bold">{servicios.find(s => s.id === servicioSeleccionado)?.nombre || ''}</span>
+                        <span className="font-bold">{nombreServicio || ''}</span>
                     </article>
                 </article>
                 <article className='flex justify-between text-[0.8em]'>
@@ -45,20 +47,72 @@ export function ResumenSeleccion({servicios, servicioSeleccionado, diaText, diaN
     );
 }
 
-export function CardError({titulo, mensaje, estado = true}){
-    return(
-        <section className={`fixed top-5 right-5 text-black z-[99] animate__animated animate__fadeInRight ${!estado ? 'hidden' : ''}`}>
-            <article className='pl-2 bg-red-600 rounded-[20px] shadow-xl'>
-                <article className="flex items-center gap-4  bg-white backdrop-blur-md rounded-[15px] border-1 border-white px-6 py-3">
-                    <p className="text-[1.5em] font-bold text-red-500 rounded-full w-[30px] h-[30px] flex items-center justify-center bg-red-200">!</p>
+const COLORES = {
+    red: "bg-red-600",
+    blue: "bg-blue-600",
+    green: "bg-green-600",
+    yellow: "bg-yellow-600",
+    gray: "bg-gray-600",
+};
+
+const DURACION_VISIBLE_MS = 5000;
+const DURACION_ANIMACION_SALIDA_MS = 200; // debe coincidir con la duración de fadeOutRight en tu CSS
+
+export function CardError({ titulo, mensaje, estado = true, onClose, color = "red" }) {
+    const [saliendo, setSaliendo] = useState(false);
+
+    useEffect(() => {
+        if (!estado) {
+            setSaliendo(false);
+            return;
+        }
+
+        const timerSalida = setTimeout(() => setSaliendo(true), DURACION_VISIBLE_MS);
+        return () => clearTimeout(timerSalida);
+    }, [estado]);
+
+    useEffect(() => {
+        if (!saliendo) return;
+
+        const timerCierre = setTimeout(() => onClose?.(), DURACION_ANIMACION_SALIDA_MS);
+        return () => clearTimeout(timerCierre);
+    }, [saliendo, onClose]);
+
+    if (!estado) return null;
+
+    const claseColor = COLORES[color] ?? COLORES.red;
+
+    return (
+        <section
+            className={`fixed top-5 right-5 text-black z-[99] animate__animated
+                ${saliendo ? "animate__fadeOutRight" : "animate__fadeInRight"}`}
+        >
+            <article className={`pl-2 ${claseColor} rounded-[20px] shadow-xl`}>
+                <article className="flex items-center gap-4 bg-white backdrop-blur-md rounded-[15px] border-1 border-white px-6 py-3">
+                    <p className={`text-[1.5em] font-bold rounded-full w-[30px] h-[30px] flex items-center justify-center ${claseColor} text-white`}>
+                        !
+                    </p>
                     <article>
-                        <span className="text-[1.2em] font-bold">
-                            {titulo || 'Error'}
-                        </span>
-                        <p className="text-[0.9em] ">{mensaje}</p>
+                        <span className="text-[1.2em] font-bold">{titulo || "Error"}</span>
+                        <p className="text-[0.9em]">{mensaje}</p>
                     </article>
                 </article>
             </article>
         </section>
     );
+}
+
+// Filtra una lista de servicios por categoría y por texto de búsqueda en el nombre.
+export function filtrarServicios(servicios, { categoriaSeleccionada, busqueda, valorSinFiltro = "Todos" }) {
+    return (servicios ?? []).filter((servicio) => {
+        const coincideCategoria =
+            categoriaSeleccionada === valorSinFiltro ||
+            servicio.tipos_servicio?.nombre?.toLowerCase() === categoriaSeleccionada.toLowerCase();
+
+        const coincideBusqueda = servicio.nombre
+            .toLowerCase()
+            .includes((busqueda ?? "").toLowerCase());
+
+        return coincideCategoria && coincideBusqueda;
+    });
 }

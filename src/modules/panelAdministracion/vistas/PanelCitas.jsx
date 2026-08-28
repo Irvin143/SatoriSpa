@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { BotonFiltro } from '../componentesPanel/buttons.jsx';
+import { BotonFiltro } from '../../componentesPanel/buttons.jsx';
 
 import iconLupa from "../../../assets/iconLupa.png";
 
-import { InputBuscar } from "../componentesPanel/inputs.jsx";
+import { InputBuscar } from "../../componentesPanel/inputs.jsx";
 
 export default function PanelCitas({btnAsideSelect}){
     
@@ -52,7 +52,9 @@ export default function PanelCitas({btnAsideSelect}){
                 />
             </nav>
             {/*Buscador para mobile*/}
-            <InputBuscar placeholder="Buscar Cliente..." />
+            <article className='lg:hidden'>
+                <InputBuscar placeholder="Buscar Cliente..." />
+            </article>
 
             {/*Filtros para Desktop*/}
             <article className='hidden 

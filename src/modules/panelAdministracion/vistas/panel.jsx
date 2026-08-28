@@ -3,7 +3,7 @@ import { Link, Outlet } from "react-router-dom";
 
 import "@fontsource/playfair-display";
 
-import PanelRituales from '../vistas/PanelRituales.jsx';
+import PanelRituales from './PanelRituales.jsx';
 import PanelCitas from '../vistas/PanelCitas.jsx';
 
 import iconLupa from "../../../assets/iconLupa.png";

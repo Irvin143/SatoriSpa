@@ -34,16 +34,12 @@ function Login() {
 
     const validarFormulario = () => {
 
-        if(formulario.Correo.trim() === ""){
-            setMensajeError("El correo es obligatorio");
+        if(formulario.Correo.trim() === "" || formulario.Contrasena.trim() === ""){
+            setMensajeError("Todos los campos son obligatorios");
             return false;
         }
         else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formulario.Correo.trim())){
             setMensajeError("El correo no es válido");
-            return false;
-        }
-        if(formulario.Contrasena.trim() === ""){
-            setMensajeError("La contraseña es obligatoria");
             return false;
         }
         return true;
@@ -68,7 +64,7 @@ function Login() {
     };
 
     return(
-        <div className="flex justify-center items-start h-screen  bg-[url('./assets/fondoLogin.png')] bg-cover bg-center bg-no-repeat">
+        <div className="flex justify-center items-start h-screen  bg-[url('/src/assets/fondoLogin.png')] bg-cover bg-center bg-no-repeat">
             <article className='w-[90%] py-10 mt-15 flex flex-col justify-center items-center text-white rounded-[20px] bg-black/60  lg:w-[35%]'>
                 <CardError titulo="Credenciales incorrectas" mensaje={mensajeError} estado={estadoError}></CardError>
                 <header className="w-[80%] grid grid-cols-3 items-center pb-5 mb-5 ">

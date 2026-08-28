@@ -110,9 +110,9 @@ function Registro() {
     return Object.keys(nuevosErrores).length === 0;
 };
     return(
-        <div className="flex justify-center items-start  bg-[url('./assets/fondoLogin.png')] bg-cover bg-center bg-no-repeat lg:items-center"> 
+        <div className="flex justify-center items-start  bg-[url('/src/assets/fondoLogin.png')] bg-cover bg-center bg-no-repeat lg:items-center"> 
             <article className='w-[90%] py-10 my-10 flex flex-col justify-center items-center text-white rounded-[20px]  bg-black/60 lg:w-[35%] lg:'>
-            <CardError titulo="Error en los datos" mensaje={mensajeError} estado={estadoError}></CardError>
+            <CardError titulo="Error en los datos" mensaje={mensajeError} estado={estadoError} onClose = {() => setEstadoError(false)}></CardError>
                 <header className="w-[80%] grid grid-cols-3 items-center mb-5  ">
                     <Link to="/login" className="justify-self-start text-xl ">X</Link>
                     <h2 className="justify-self-center text-4xl font-bold">SATORI</h2>
