@@ -14,7 +14,8 @@ import fondoCitas from "../../../assets/fondoCitas.png";
 import CitasHorario from "./ReservacionHorario.jsx";
 import CitasDatos from './ReservacionDatos.jsx';
 
-import { obtenerServicios } from '../services/useCita.js';
+
+import { obtenerRituales } from '../../../utils/use.js';
 
 function Citas() {
 

@@ -66,16 +66,6 @@ export const obtenerUnServicio = async (idServicio) => {
     return { success: true, data };
 }
 
-
-export const obtenerServicios = async () => {
-    const { data, error } = await supabase
-        .from('servicios')
-        .select('*, tipos_servicio(nombre)')
-        .eq('activo', true);
-    if (error) return { success: false, error: error.message };
-    return { success: true, data };
-}
-
 export const obtenerHorariosDisponibles = async (fecha) => {
     const { data, error } = await supabase
         .from('citas')

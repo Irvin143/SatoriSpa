@@ -103,6 +103,12 @@ export function CardError({ titulo, mensaje, estado = true, onClose, color = "re
 }
 
 // Filtra una lista de servicios por categoría y por texto de búsqueda en el nombre.
+
+// const serviciosFiltrados = filtrarServicios(servicios, {
+//       categoriaSeleccionada: btnFiltroSelect,
+//       busqueda,
+//       valorSinFiltro: "Todos", // o "TODOS", según lo que uses en ese botón
+//   });
 export function filtrarServicios(servicios, { categoriaSeleccionada, busqueda, valorSinFiltro = "Todos" }) {
     return (servicios ?? []).filter((servicio) => {
         const coincideCategoria =

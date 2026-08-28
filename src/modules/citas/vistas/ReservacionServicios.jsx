@@ -4,7 +4,7 @@ import { useOutletContext,Link } from "react-router-dom";
 import fondoCitas from "../../../assets/fondoCitas.png";
 
 import { CardError, filtrarServicios }  from '../../../Components.jsx';
-import { obtenerServicios } from '../services/useCita.js';
+import { obtenerCategorias, obtenerRituales } from '../../../utils/use.js';
 import { BotonFiltro } from '../../componentesPanel/buttons.jsx';
 import { InputBuscar } from "../../componentesPanel/inputs.jsx";
 
@@ -17,10 +17,12 @@ export default function ReservacionSevicios(){
 
   const [cargando, setCargando] = useState(true);
 
+  const [categorias, setCategorias] = useState([]);
+
   useEffect(() => {
       const cargarServicios = async () => {
         setCargando(true);
-        const result = await obtenerServicios()
+        const result = await obtenerRituales()
         if (result.success) {
             setServicios(result.data);
             console.log("Servicios cargados:", result.data);
@@ -29,6 +31,19 @@ export default function ReservacionSevicios(){
         }
           setCargando(false);
       }
+
+      const fetchCategorias = async () => {
+        const result = await obtenerCategorias();
+        if (result.success) {
+            setCategorias(result.data);
+            console.log("Categorías cargadas:", result.data);
+        }
+        else {
+            console.error("Error al obtener categorías:", result.error);
+        }
+      };
+
+      fetchCategorias();
       cargarServicios();
   }, []);
 
@@ -65,17 +80,18 @@ export default function ReservacionSevicios(){
                 <article className='flex justify-center px-5 py-1 mt-5 border-1 rounded-[20px] lg:m-0
                 '>
                   <BotonFiltro texto="Todos" btnSeleccionado={btnFiltroSelect} onClick={() => {
-                    filtrarServicios("Todos");
                     setBtnFiltroSelect("Todos");
                     }} />
-                  <BotonFiltro texto="Faciales" btnSeleccionado={btnFiltroSelect} onClick={() => {
-                    filtrarServicios("Facial");
-                    setBtnFiltroSelect("Faciales");
-                  }} />
-                  <BotonFiltro texto="Corporales" btnSeleccionado={btnFiltroSelect} onClick={() => {
-                    filtrarServicios("Corporales");
-                    setBtnFiltroSelect("Corporales");
-                  }} />
+                  {categorias.map((categoria) => (
+                    <BotonFiltro
+                        key={categoria.id}
+                        texto={categoria.nombre}
+                        btnSeleccionado={btnFiltroSelect}
+                        onClick={() => setBtnFiltroSelect(categoria.nombre)}
+                    />
+                    ))
+                  }
+                  
                 </article>
               </article>
               {cargando ? <SkeletonServicios /> :  

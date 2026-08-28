@@ -59,18 +59,7 @@ export async function obtenerRitual(idRitual) {
     return { success: true, data: ritual };
 }
 
-export async function obtenerRituales() {
-    const { data: rituales, error } = await supabase
-        .from("servicios")
-        .select("*, tipos_servicio(nombre)");
 
-    if (error) {
-        console.error("Error al obtener los rituales:", error);
-        return { success: false, error: error.message };
-    }
-
-    return { success: true, data: rituales };
-}
 
 export async function eliminarRitual(idRitual) {
     const { error } = await supabase

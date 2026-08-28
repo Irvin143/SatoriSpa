@@ -11,8 +11,7 @@ import { InputBuscar } from "../../componentesPanel/inputs.jsx";
 import FormularioServicio from "./Rituales/ModificarRitual.jsx";
 import Modal from "./Rituales/Modal.jsx";
 
-import { obtenerRituales } from './Rituales/services/useRitual.js';
-import { obtenerCategorias } from '../../../utils/use.js';
+import { obtenerCategorias, obtenerRituales  } from '../../../utils/use.js';
 import { filtrarServicios } from '../../../Components.jsx';
 
 function PanelRituales({ btnAsideSelect }) {

@@ -4,25 +4,28 @@ import fondoCitas from "../../../assets/fondoCitas.png";
 
 import { BotonFiltro } from '../../componentesPanel/buttons.jsx';
 import { InputBuscar } from "../../componentesPanel/inputs.jsx";
-import { obtenerServicios } from '../services/useService.js';
+
+import { obtenerRituales, obtenerCategorias } from '../../../utils/use.js';
+
+import { filtrarServicios } from '../../../Components.jsx';
 
 import { Link } from "react-router-dom";
 
 export default function VerServicios() {
-    const [btnSeleccionado, setBtnSeleccionado] = useState("Todos");
+    const [btnFiltroSelect, setBtnFiltroSelect] = useState("Todos");
     const [servicioSeleccionado, setServicioSeleccionado] = useState(null);
     const [cargando, setCargando] = useState(false);
     const [error, setError] = useState(null);
     const [servicios, setServicios] = useState([]);
     const [busqueda, setBusqueda] = useState("");
-    const [categoriaFiltro, setCategoriaFiltro] = useState("Todos");
+    const [categorias, setCategorias] = useState([]);
 
     useEffect(() => {
         const cargarServicios = async () => {
             setCargando(true);
             setError(null);
 
-            const result = await obtenerServicios();
+            const result = await obtenerRituales();
 
             if (result.success) {
                 setServicios(result.data);
@@ -34,24 +37,24 @@ export default function VerServicios() {
             setCargando(false);
         };
 
+        const fetchCategorias = async () => {
+            const result = await obtenerCategorias();
+            if (result.success) {
+                setCategorias(result.data);
+            } else {
+                console.error("Error al obtener categorías:", result.error);
+            }
+        };
+
+        fetchCategorias();
         cargarServicios();
     }, []);
 
-    const serviciosFiltrados = servicios.filter((servicio) => {
-        const coincideCategoria =
-            categoriaFiltro === "Todos" ||
-            servicio.tipos_servicio.nombre === categoriaFiltro;
-
-        const coincideBusqueda = servicio.nombre
-            .toLowerCase()
-            .includes(busqueda.toLowerCase());
-
-        return coincideCategoria && coincideBusqueda;
+    const serviciosFiltrados = filtrarServicios(servicios, {
+        categoriaSeleccionada: btnFiltroSelect,
+        busqueda,
+        valorSinFiltro: "Todos", // o "TODOS", según lo que uses en ese botón
     });
-        const handleReservarCita = () => {
-        
-        console.log("Reservar cita");
-    };
 
     return (
         <section className="relative min-h-screen pt-20 lg:pt-10">
@@ -68,7 +71,6 @@ export default function VerServicios() {
                     <Link
                         to="/reservacion"
                         type="button"
-                        onClick={handleReservarCita}
                         className="self-start shrink-0 rounded-full 
                         bg-[#655e57] 
                         text-white transition 
@@ -89,28 +91,19 @@ export default function VerServicios() {
                     <article className="flex justify-center px-5 py-1 mt-5 border-1 rounded-[20px] lg:m-0">
                         <BotonFiltro
                             texto="Todos"
-                            btnSeleccionado={btnSeleccionado}
+                            btnSeleccionado={btnFiltroSelect}
                             onClick={() => {
-                                setCategoriaFiltro("Todos");
-                                setBtnSeleccionado("Todos");
+                                setBtnFiltroSelect("Todos");
                             }}
                         />
-                        <BotonFiltro
-                            texto="Faciales"
-                            btnSeleccionado={btnSeleccionado}
-                            onClick={() => {
-                                setCategoriaFiltro("Facial");
-                                setBtnSeleccionado("Faciales");
-                            }}
-                        />
-                        <BotonFiltro
-                            texto="Corporales"
-                            btnSeleccionado={btnSeleccionado}
-                            onClick={() => {
-                                setCategoriaFiltro("Corporales");
-                                setBtnSeleccionado("Corporales");
-                            }}
-                        />
+                        {categorias.map((categoria) => (
+                            <BotonFiltro
+                                key={categoria.id}
+                                texto={categoria.nombre}
+                                btnSeleccionado={btnFiltroSelect}
+                                onClick={() => setBtnFiltroSelect(categoria.nombre)}
+                            />
+                        ))}
                     </article>
                 </article>
 
