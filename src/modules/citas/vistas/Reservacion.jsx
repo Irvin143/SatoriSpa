@@ -13,6 +13,8 @@ import fondoCitas from "../../../assets/fondoCitas.png";
 
 import CitasHorario from "./ReservacionHorario.jsx";
 import CitasDatos from './ReservacionDatos.jsx';
+import ReservacionSevicios from './ReservacionServicios.jsx';
+
 
 
 import { obtenerRituales } from '../../../utils/use.js';
@@ -84,7 +86,51 @@ function Citas() {
           </header>
         </section>
           
-        <Outlet context = {{
+        {ordenSeleccionado === 1 && (
+          <ReservacionSevicios 
+            servicioSeleccionado={servicioSeleccionado}
+            setServicioSeleccionado={setServicioSeleccionado}
+            setOrdenSeleccionado={setOrdenSeleccionado}
+            servicios={servicios}
+            setServicios={setServicios}
+          />
+        )}
+
+        {ordenSeleccionado === 2 && (
+          <CitasHorario 
+            servicioSeleccionado={servicioSeleccionado}
+            setServicioSeleccionado={setServicioSeleccionado}
+            servicios={servicios}
+            setServicios={setServicios}
+            setOrdenSeleccionado={setOrdenSeleccionado}
+            fecha={fecha}
+            setFecha={setFecha}
+            horarioSeleccionado={horarioSeleccionado}
+            setHorarioSeleccionado={setHorarioSeleccionado}
+            diaText={diaText}
+            setDiaText={setDiaText}
+            diaNumber={diaNumber}
+            setDiaNumber={setDiaNumber}
+            mes={mes}
+            setMes={setMes}
+          />
+        )}
+            
+        {ordenSeleccionado === 3 && (
+          <CitasDatos 
+            servicios={servicios}
+            servicioSeleccionado={servicioSeleccionado}
+            setServicioSeleccionado={setServicioSeleccionado}
+            diaText={diaText}
+            diaNumber={diaNumber}
+            mes={mes}
+            horarioSeleccionado={horarioSeleccionado}
+            setOrdenSeleccionado={setOrdenSeleccionado}
+            fecha={fecha}
+            setFecha={setFecha}
+          />
+        )}
+        {/* <Outlet context = {{
           servicioSeleccionado,
           setServicioSeleccionado,
           setOrdenSeleccionado, 
@@ -99,7 +145,7 @@ function Citas() {
           setDiaNumber,
           mes,
           setMes
-        }}/>
+        }}/> */}
           
       </div>
   );

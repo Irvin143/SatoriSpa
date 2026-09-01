@@ -12,8 +12,13 @@ import masaje from "../../../assets/masaje2.jpeg";
 
 
 
-export default function ReservacionSevicios(){
-  const {servicioSeleccionado, setServicioSeleccionado, setOrdenSeleccionado, servicios, setServicios} = useOutletContext();
+export default function ReservacionSevicios({
+  servicioSeleccionado,
+  setServicioSeleccionado,
+  setOrdenSeleccionado,
+  servicios, 
+  setServicios} 
+  ){
 
   const [cargando, setCargando] = useState(true);
 

@@ -11,8 +11,7 @@ import { obtenerHorariosDisponibles, obtenerUnServicio } from '../services/useCi
 import { ResumenSeleccion, CardError } from '../../../Components.jsx';
 
 
-export default function CitasHorario() {
-    const {
+export default function CitasHorario({
         servicioSeleccionado, setServicioSeleccionado,
         servicios, setServicios,
         setOrdenSeleccionado,
@@ -21,7 +20,17 @@ export default function CitasHorario() {
         diaNumber, setDiaNumber,
         mes, setMes,
         fecha, setFecha
-    } = useOutletContext();
+    }) {
+    // const {
+    //     servicioSeleccionado, setServicioSeleccionado,
+    //     servicios, setServicios,
+    //     setOrdenSeleccionado,
+    //     horarioSeleccionado, setHorarioSeleccionado,
+    //     diaText, setDiaText,
+    //     diaNumber, setDiaNumber,
+    //     mes, setMes,
+    //     fecha, setFecha
+    // } = useOutletContext();
 
     const { id } = useParams();
     const [fechaSeleccionada, setFechaSeleccionada] = useState(null);
@@ -279,35 +288,64 @@ export default function CitasHorario() {
                 />
 
                 {/* Resumen de selección para desktop */}
-                <article className='hidden lg:flex lg:flex-col w-[40%] text-[1em] bg-[#f4f0ea]/80 backdrop-blur-md rounded-[25px] border-1 border-white'>
-                    <img src={fondoHeader} alt="" className='p-0 m-0 w-full rounded-[25px]' />
-                    <article className='px-10 py-7'>
-                        <span className="font-bold text-[1.4em]">{servicioActual?.nombre || ''}</span>
+                <article className='hidden lg:flex lg:flex-col w-[40%] text-[1em] bg-[#f4f0ea]/80 backdrop-blur-md rounded-[25px] border border-white shadow-[0_20px_50px_-15px_rgba(101,94,87,0.35)] overflow-hidden relative'>
+                    {/* Acento superior sutil */}
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#655e57]/40 to-transparent z-10" />
+
+                    <div className="relative">
+                        <img src={fondoHeader} alt="" className='w-full h-[180px] object-cover' />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#f4f0ea] via-transparent to-transparent" />
+                    </div>
+
+                    <article className='px-10 pt-2 pb-7 -mt-6 relative'>
+                        {/* Pequeño sello circular, detalle ceremonial */}
+                        <div className="w-10 h-10 rounded-full bg-[#655e57] flex items-center justify-center mb-4 shadow-md">
+                            <span className="text-white text-[1.1em]">✦</span>
+                        </div>
+
+                        <span className="font-bold text-[1.4em] leading-tight">{servicioActual?.nombre || ''}</span>
                         <br />
-                        <span className="text-[0.9em]">
+                        <span className="text-[0.9em] text-[#655e57]/70 italic">
                             {servicioActual?.tiempo ? `Ritual de ${servicioActual.tiempo}` : ''}
                         </span>
-                        <p className='pb-7 pt-4'>
+
+                        <p className='pb-6 pt-4 text-[0.9em] leading-relaxed'>
                             Una experiencia inmersiva que combina técnicas orientales con aceites esenciales orgánicos para una desconexión total.
                         </p>
-                        <article className='flex justify-between pt-4'>
-                            <p>Fecha</p>
-                            <p className='font-bold ml-2'>
+
+                        <div className="h-px bg-gradient-to-r from-transparent via-[#655e57]/25 to-transparent mb-2" />
+
+                        <article className='flex justify-between items-center py-3'>
+                            <span className="flex items-center gap-2 text-[#655e57]/70">
+                                <img src={iconCalendario} alt="" className="w-4 h-4 opacity-70" />
+                                Fecha
+                            </span>
+                            <p className='font-bold ml-2 text-right'>
                                 {diaText} {diaNumber ? `${diaNumber} de` : ''} {mes}
                             </p>
                         </article>
-                        <article className='flex justify-between py-2'>
-                            <p>Horario</p>
+
+                        <div className="h-px bg-[#655e57]/10" />
+
+                        <article className='flex justify-between items-center py-3'>
+                            <span className="flex items-center gap-2 text-[#655e57]/70">
+                                <img src={iconReloj} alt="" className="w-4 h-4 opacity-70" />
+                                Horario
+                            </span>
                             <p className='font-bold ml-2'>{horarioSeleccionado || 'Sin horario seleccionado'}</p>
                         </article>
-                        <article className='flex justify-between py-4'>
-                            <p>Total</p>
-                            <p className='font-bold'>{servicioActual?.precio ? `$${servicioActual.precio}` : ''}</p>
+
+                        <div className="h-px bg-gradient-to-r from-transparent via-[#655e57]/25 to-transparent mb-2 mt-1" />
+
+                        <article className='flex justify-between items-center py-4'>
+                            <p className="text-[#655e57]/70">Total</p>
+                            <p className='font-bold text-[1.3em]'>{servicioActual?.precio ? `$${servicioActual.precio}` : ''}</p>
                         </article>
+
                         <Link
                             to="/reservacion/datos"
                             aria-disabled={!puedeConfirmar}
-                            className={`w-[90%] text-white text-center py-4 px-8 flex items-center justify-center mt-5 rounded-[25px] backdrop-blur-md text-sm font-bold hover:cursor-pointer hover:bg-[#655e57]/70 transition-all duration-300
+                            className={`w-full text-white text-center py-4 px-8 flex items-center justify-center mt-3 rounded-[25px] backdrop-blur-md text-sm font-bold tracking-wide hover:cursor-pointer hover:bg-[#655e57]/70 transition-all duration-300
                                 ${puedeConfirmar ? 'bg-[#655e57]' : 'bg-[#9c9790]'}`}
                             onClick={handleConfirmar}
                         >

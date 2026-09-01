@@ -29,7 +29,7 @@ export const crearCita = async (datosCita, usuario, formulario = null) => {
         const { data: usuarioDB, error: errorUsuario } = await supabase
         .from('usuarios')
         .select('idusuario')
-        .eq('auth_id', usuario.id)
+        .eq('idusuario', usuario.id)
         .single();
 
         if (errorUsuario) return { success: false, error: errorUsuario.message };
@@ -79,7 +79,7 @@ export const obtenerInfoUsuario = async (idUsuario) => {
     const { data, error } = await supabase
         .from('usuarios')
         .select('nombre, correo, telefono')
-        .eq('auth_id', idUsuario)
+        .eq('idusuario', idUsuario)
         .single();
     if (error) return { success: false, error: error.message };
     return { success: true, data };
