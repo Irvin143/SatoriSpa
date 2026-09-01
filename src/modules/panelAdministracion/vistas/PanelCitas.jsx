@@ -1,203 +1,258 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { BotonFiltro } from '../../componentesPanel/buttons.jsx';
 
 import iconLupa from "../../../assets/iconLupa.png";
 
 import { InputBuscar } from "../../componentesPanel/inputs.jsx";
 
-export default function PanelCitas({btnAsideSelect}){
-    
-    const [btnFiltroSelect ,setBtnFiltroSelect] = useState("TODAS");
+import { obtenerCitas } from "./citas/services/useCita.js";
 
-    return(
-        <section className={`transition-all duration-300 p-5 lg:p-0 w-full`}>
-            <h2 className = "font-bold text-3xl my-5">
-                Gestion de Citas
-            </h2>
+const ESTILOS_ESTATUS = {
+    Pendiente: "bg-amber-100 text-amber-800",
+    Completada: "bg-emerald-100 text-emerald-800",
+    Cancelada: "bg-red-100 text-red-700",
+};
+
+function claseEstatus(estatus) {
+    return ESTILOS_ESTATUS[estatus] ?? "bg-gray-100 text-gray-700";
+}
+
+const MESES_CORTOS = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+
+function formatearFecha(fechaISO) {
+    if (!fechaISO) return "";
+
+    const [anio, mes, dia] = fechaISO.split("-").map(Number);
+    const fecha = new Date(anio, mes - 1, dia);
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+
+    const diffDias = Math.round((fecha - hoy) / (1000 * 60 * 60 * 24));
+
+    if (diffDias === 0) return "Hoy";
+    if (diffDias === 1) return "Mañana";
+
+    return `${dia} ${MESES_CORTOS[mes - 1]} ${anio}`;
+}
+
+function filtrarCitas(citas, { estatusFiltro, servicioFiltro, busquedaCliente }) {
+    return (citas ?? []).filter((cita) => {
+        const coincideEstatus = estatusFiltro === "TODAS" || cita.estado === estatusFiltro;
+
+        const coincideServicio =
+            !servicioFiltro || cita.servicios?.nombre?.toLowerCase() === servicioFiltro.toLowerCase();
+
+        const coincideBusqueda = (cita.nombreCliente ?? "")
+            .toLowerCase()
+            .includes(busquedaCliente.toLowerCase());
+
+        return coincideEstatus && coincideServicio && coincideBusqueda;
+    });
+}
+
+export default function PanelCitas({ btnAsideSelect }) {
+    const [btnFiltroSelect, setBtnFiltroSelect] = useState("TODAS");
+    const [servicioFiltro, setServicioFiltro] = useState("");
+    const [busquedaCliente, setBusquedaCliente] = useState("");
+    const [citas, setCitas] = useState(null);
+
+    useEffect(() => {
+        const fetchCitas = async () => {
+            const result = await obtenerCitas();
+            if (result.success) {
+                setCitas(result.data);
+            } else {
+                console.error("Error al obtener las citas:", result.error);
+            }
+        };
+        fetchCitas();
+    }, []);
+
+    const citasFiltradas = filtrarCitas(citas, {
+        estatusFiltro: btnFiltroSelect,
+        servicioFiltro,
+        busquedaCliente,
+    });
+
+    const nombresServicios = [...new Set((citas ?? []).map((c) => c.servicios?.nombre).filter(Boolean))];
+
+    const totalCitas = citas?.length ?? 0;
+    const totalPendientes = (citas ?? []).filter((c) => c.estado === "Pendiente").length;
+    const totalHoy = (citas ?? []).filter((c) => formatearFecha(c.fechaCita) === "Hoy").length;
+
+    return (
+        <section className="transition-all duration-300 p-5 lg:p-0 w-full">
+            <h2 className="font-bold text-3xl my-5">Gestion de Citas</h2>
             <span>Visualice y administre todas las citas programadas en el santuario</span>
-            
-            {/*Filtros para Mobile*/}
-            <nav className='
-                flex
-                my-7
-                p-1
-                gap-3
-                overflow-hidden
-                overflow-x-auto
-                whitespace-nowrap
-                scrollbar-hide
-                lg:hidden
-            '>
-                <BotonFiltro 
-                    texto="TODAS"
-                    btnSeleccionado={btnFiltroSelect}
-                    onClick={() => setBtnFiltroSelect("TODAS")}
-                />
 
-                <BotonFiltro 
-                    texto="PENDIENTES"
-                    btnSeleccionado={btnFiltroSelect}
-                    onClick={() => setBtnFiltroSelect("PENDIENTES")}
-                />
+            {/* Resumen rápido */}
+            <article className="grid grid-cols-3 gap-3 mt-6 mb-2 lg:max-w-md">
+                <ResumenMetrica valor={totalCitas} etiqueta="Total" />
+                <ResumenMetrica valor={totalPendientes} etiqueta="Pendientes" acento="text-amber-700" />
+                <ResumenMetrica valor={totalHoy} etiqueta="Hoy" acento="text-[#655e57]" />
+            </article>
 
-                <BotonFiltro 
-                    texto="COMPLETADAS"
-                    btnSeleccionado={btnFiltroSelect}
-                    onClick={() => setBtnFiltroSelect("COMPLETADAS")}
-                />
-                <BotonFiltro 
-                    texto="CANCELADAS"
-                    btnSeleccionado={btnFiltroSelect}
-                    onClick={() => setBtnFiltroSelect("CANCELADAS")}
-                />
+            {/* Filtros para Mobile */}
+            <nav className="flex my-7 px-3 py-1 gap-3 overflow-hidden overflow-x-auto whitespace-nowrap scrollbar-hide lg:hidden">
+                <BotonFiltro texto="TODAS" btnSeleccionado={btnFiltroSelect} onClick={() => setBtnFiltroSelect("TODAS")} />
+                <BotonFiltro texto="Pendiente" btnSeleccionado={btnFiltroSelect} onClick={() => setBtnFiltroSelect("Pendiente")} />
+                <BotonFiltro texto="Completada" btnSeleccionado={btnFiltroSelect} onClick={() => setBtnFiltroSelect("Completada")} />
+                <BotonFiltro texto="Cancelada" btnSeleccionado={btnFiltroSelect} onClick={() => setBtnFiltroSelect("Cancelada")} />
             </nav>
-            {/*Buscador para mobile*/}
-            <article className='lg:hidden'>
-                <InputBuscar placeholder="Buscar Cliente..." />
+
+            {/* Buscador para mobile */}
+            <article className="lg:hidden">
+                <InputBuscar
+                    placeholder="Buscar Cliente..."
+                    value={busquedaCliente}
+                    onChange={(e) => setBusquedaCliente(e.target.value)}
+                />
             </article>
 
-            {/*Filtros para Desktop*/}
-            <article className='hidden 
-                lg:flex 
-                justify-start items-center gap-5 
-                my-7 px-5
-                rounded-[30px]
-                backdrop-blur-xl
-                border border-white/30 
-                bg-white/10'>
-                <InputFiltro
-                    opciones={["John Doe", "Jane Smith", "Alice "]}
-                    placeholder="Servicio/Ritual"
-                    nombreLista="rituales"
-                />
-                <InputFiltro
-                    opciones={["Completada", "Cancelada", "Pendiente"]}
-                    placeholder="Estatus"
-                    nombreLista="Estatus"
-                />
-                <InputFiltro
-                    opciones={["JohnDoe", "", "Alice "]}
-                    placeholder="Filtrar por cliente"
-                    nombreLista="clientes"
-                />
-                <article className='relative w-full mt-5 mb-5 '>
-                    <img src={iconLupa} alt="Buscar" className='absolute left-3 top-1/2 transform -translate-y-1/2 w-[20px] h-[20px]' />
-                    <input type="text" placeholder="Buscar Cliente..." className='pl-10 py-3 shadow-md rounded-[10px] text-[#655e57] w-full bg-white/35 placeholder:text-[#655e57]' />
+            {/* Filtros para Desktop */}
+            <article className="hidden lg:flex justify-start items-center gap-5 my-7 px-5 py-4 rounded-[30px] backdrop-blur-xl border border-white/30 bg-white/10">
+                <select
+                    value={servicioFiltro}
+                    onChange={(e) => setServicioFiltro(e.target.value)}
+                    className="px-3 py-3 rounded-[10px] border border-white/40 bg-white/70 text-[#655e57] shadow-sm focus:outline-none focus:ring-2 focus:ring-[#655e57]/30"
+                >
+                    <option value="">Servicio/Ritual</option>
+                    {nombresServicios.map((nombre) => (
+                        <option key={nombre} value={nombre}>{nombre}</option>
+                    ))}
+                </select>
+
+                <select
+                    value={btnFiltroSelect}
+                    onChange={(e) => setBtnFiltroSelect(e.target.value)}
+                    className="px-3 py-3 rounded-[10px] border border-white/40 bg-white/70 text-[#655e57] shadow-sm focus:outline-none focus:ring-2 focus:ring-[#655e57]/30"
+                >
+                    <option value="TODAS">Estatus</option>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="Completada">Completada</option>
+                    <option value="Cancelada">Cancelada</option>
+                </select>
+
+                <article className="relative flex-1">
+                    <img src={iconLupa} alt="" className="absolute left-3 top-1/2 -translate-y-1/2 w-[18px] h-[18px] opacity-60" />
+                    <input
+                        type="text"
+                        placeholder="Buscar cliente..."
+                        value={busquedaCliente}
+                        onChange={(e) => setBusquedaCliente(e.target.value)}
+                        className="pl-10 py-3 shadow-sm rounded-[10px] text-[#655e57] w-full bg-white/70 border border-white/40 placeholder:text-[#655e57]/60 focus:outline-none focus:ring-2 focus:ring-[#655e57]/30"
+                    />
                 </article>
-                <button className='bg-[#655e57]/85 w-full text-white py-2 px-4 rounded-[10px] hover:bg-[#655e57] hover:scale-105 hover:cursor-pointer transition-all duration-300'>
-                    Añadir nueva cita
-                </button>
+
+                <Link
+                    to="/reservacion"
+                    className="bg-[#655e57]/85 text-white py-3 px-6 rounded-[10px]
+                    whitespace-nowrap hover:bg-[#655e57] hover:scale-105 hover:cursor-pointer transition-all duration-300"
+                >
+                    + Añadir nueva cita
+                </Link>
             </article>
 
-            {/*Card para móvil*/}
+            {citas === null && (
+                <p className="text-center py-10">Cargando citas...</p>
+            )}
+
+            {citas !== null && citasFiltradas.length === 0 && (
+                <p className="text-center py-10 text-[#655e57]/70">No se encontraron citas con estos filtros.</p>
+            )}
+
+            {/* Cards para móvil */}
             <article className="my-5 text-[#655e57] lg:hidden">
-                <CardCita 
-                    nombreCte="John Doe"
-                    estatus="Cancelada"
-                    ritual="Ritual de Bienvenida"
-                    fecha="2023-10-15"
-                    horario="10:00 AM"
-                />
-            </article> 
-            
-            {/*Tabla*/}
-            <article className="my-5 hidden lg:block shadow-md rounded-[20px] w-full overflow-hidden">
-                <table className="w-full text-[#655e57] border-collapse-fixed">
-                    <thead >
-                        <tr className="bg-[#f4f0ea]/80 backdrop-blur-md">
-                            <th className=" p-2">Nombre</th>
-                            <th className=" p-2">Ritual/Servicio</th>
-                            <th className=" p-2">Fecha</th>
-                            <th className=" p-2">Horario</th>
-                            <th className=" p-2">Estatus</th>
-                            <th className=" p-2">Acciones</th>
-                        </tr>
-                    </thead>
-
-                    <tbody className="bg-white">
-                        <RegistroTable
-                            nombreCte="Jane Smith"
-                            estatus="Pendiente"
-                            ritual="Ritual de Relajación"
-                            fecha="2023-10-16"
-                            horario="2:00 PM"
-                        />
-                        <RegistroTable
-                            nombreCte="Alice Johnson"
-                            estatus="Completada"
-                            ritual="Ritual de Energización"
-                            fecha="2023-10-17"
-                            horario="11:00 AM"
-                        />
-                        <RegistroTable
-                            nombreCte="Alice Johnson"
-                            estatus="Cancelada"
-                            ritual="Ritual de Energización"
-                            fecha="2023-10-17"
-                            horario="11:00 AM"
-                        />
-                    </tbody>
-                </table>
+                {citasFiltradas.map((cita, index) => (
+                    <CardCita
+                        key={index}
+                        nombreCte={cita.nombreCliente}
+                        estatus={cita.estado}
+                        ritual={cita.servicios?.nombre}
+                        fecha={cita.fechaCita}
+                        horario={cita.hora}
+                    />
+                ))}
             </article>
 
+            {/* Tabla */}
+            {citasFiltradas.length > 0 && (
+                <article className="my-5 hidden lg:block shadow-md rounded-[20px] w-full overflow-hidden">
+                    <table className="w-full text-[#655e57] border-collapse">
+                        <thead>
+                            <tr className="bg-[#655e57]/80 text-white text-left">
+                                <th className="p-3 font-semibold">Nombre</th>
+                                <th className="p-3 font-semibold">Ritual/Servicio</th>
+                                <th className="p-3 font-semibold">Fecha</th>
+                                <th className="p-3 font-semibold">Horario</th>
+                                <th className="p-3 font-semibold">Estatus</th>
+                                <th className="p-3 font-semibold">Acciones</th>
+                            </tr>
+                        </thead>
 
+                        <tbody className="bg-white divide-y divide-gray-100">
+                            {citasFiltradas.map((cita, index) => (
+                                <RegistroTable
+                                    key={index}
+                                    nombreCte={cita.nombreCliente}
+                                    estatus={cita.estado}
+                                    ritual={cita.servicios?.nombre}
+                                    fecha={cita.fechaCita}
+                                    horario={cita.hora}
+                                />
+                            ))}
+                        </tbody>
+                    </table>
+                </article>
+            )}
         </section>
     );
 }
 
-function CardCita({nombreCte, estatus, ritual, fecha, horario}){
-    return(
-        <article className='flex flex-col w-full gap-1 p-5 bg-white/95 rounded-[20px] mb-5 '>
+function ResumenMetrica({ valor, etiqueta, acento = "text-[#655e57]" }) {
+    return (
+        <article className="bg-white/70 backdrop-blur-md rounded-[16px] border border-white/40 px-4 py-3 text-center shadow-sm">
+            <p className={`text-2xl font-bold ${acento}`}>{valor}</p>
+            <p className="text-xs text-[#655e57]/60">{etiqueta}</p>
+        </article>
+    );
+}
+
+function CardCita({ nombreCte, estatus, ritual, fecha, horario }) {
+    return (
+        <article className="flex flex-col w-full gap-1 p-5 bg-white/95 rounded-[20px] mb-5 shadow-sm">
             <article className="flex justify-between items-center">
                 <h2 className="text-xl font-bold">{nombreCte}</h2>
-                <article className="flex items-center gap-2">
-                    <article className={`w-4 h-4 rounded-full ${estatus === "Pendiente" ? "bg-yellow-500" : estatus === "Completada" ? "bg-green-500" :estatus === "Cancelada" ? "bg-red-500" : "bg-gray-500"}`} />
-                    <span className="text-sm font-medium">{estatus}</span>
-                </article>
+                <span className={`text-xs font-semibold px-3 py-1 rounded-full ${claseEstatus(estatus)}`}>
+                    {estatus}
+                </span>
             </article>
             <span>{ritual}</span>
-            <span>{fecha}</span>
-            <span>{horario}</span>
+            <article className="flex items-center gap-2 text-sm text-[#655e57]/70">
+                <span>{formatearFecha(fecha)}</span>
+                <span>·</span>
+                <span>{horario}</span>
+            </article>
         </article>
     );
 }
 
-function RegistroTable({nombreCte, estatus, ritual, fecha, horario}){
-    return(
-        <tr className="">
-            <td className="pl-2 ">{nombreCte}</td>
-            <td className="pl-2">{ritual}</td>
-            <td className="pl-2">{fecha}</td>
-            <td className="pl-2">{horario}</td>
-            <td className=" py-3">
-                <article className={` ${estatus === "Pendiente" ? "bg-yellow-500" : estatus === "Completada" ? "bg-green-500" :estatus === "Cancelada" ? "bg-red-500" : "bg-gray-500"} 
-                                    px-3 rounded-full inline-block text-black`} >
+function RegistroTable({ nombreCte, estatus, ritual, fecha, horario }) {
+    return (
+        <tr className="hover:bg-[#f4f0ea]/50 transition-colors duration-150">
+            <td className="p-3 font-medium">{nombreCte}</td>
+            <td className="p-3">{ritual}</td>
+            <td className="p-3">{formatearFecha(fecha)}</td>
+            <td className="p-3">{horario}</td>
+            <td className="p-3">
+                <span className={`px-3 py-1 rounded-full text-xs font-semibold inline-block ${claseEstatus(estatus)}`}>
                     {estatus}
-                </article>
+                </span>
             </td>
-            <td></td>
+            <td className="p-3">
+                <span className="text-gray-300 text-sm" title="Próximamente">···</span>
+            </td>
         </tr>
     );
-}
-
-function InputFiltro({opciones, placeholder, nombreLista}){
-    return(
-        <article className="
-            px-2 py-3
-            rounded-[10px]
-            backdrop-blur-xl
-            border border-white/30 
-            bg-[#eee]/80
-            shadow-[0_6px_20px_rgba(0,0,0,0.12)]
-            "
-        >
-            <input list={nombreLista} placeholder={placeholder}  />
-
-            <datalist id={nombreLista}>
-                {opciones.map((opcion, index) => (
-                    <option key={index} value={opcion} />
-                ))}
-            </datalist>
-        </article>
-    )
 }
