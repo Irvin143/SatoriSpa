@@ -16,6 +16,7 @@ import Registro from "../modules/login/vistas/Registro.jsx";
 import Panel from "../modules/panelAdministracion/vistas/panel.jsx";
 import PanelRituales from "../modules/panelAdministracion/vistas/PanelRituales.jsx";
 import PanelCitas from "../modules/panelAdministracion/vistas/PanelCitas.jsx";
+import PanelSatori from "../modules/panelAdministracion/vistas/PanelSatori.jsx";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route index element={<PanelCitas/>}/>
           <Route path="rituales" element={<PanelRituales />} />
           <Route path="citas" element={<PanelCitas />} />
+          <Route path="satori" element={<PanelSatori />} />
         </Route>
 
         <Route path="/login" element={<Login />} />

@@ -21,7 +21,7 @@ function Panel() {
     
     return(
         <div
-            className="flex items-start  lg:pl-0 text-[#655e57] bg-[#f4f0e9]/80 min-h-screen">
+            className="flex items-start mb-30 lg:mb-0 lg:pl-0 text-[#655e57] bg-[#f4f0e9]/80 min-h-screen">
             <aside
                 className="
                     fixed bottom-0 flex 
@@ -43,11 +43,11 @@ function Panel() {
                 
                 "
             >
-                <article className='px-2 py-3 flex justify-between w-full items-center lg:flex-col  gap-5'>
+                <article className='px-2 py-3  flex justify-between w-full items-center lg:flex-col  gap-5'>
                     <img src={logoSatori} alt="Logo Satori" className='hidden lg:flex w-[60px] ' />
+                    <BotonAside texto="SATORI" imagen={iconCalendario} imagenSecundario = {iconCalendarioBlanco} btnSeleccionado={btnAsideSelect} onClick={() => setBtnAsideSelect("SATORI")} />
                     <BotonAside texto="CITAS" imagen={iconCalendario} imagenSecundario = {iconCalendarioBlanco} btnSeleccionado={btnAsideSelect} onClick={() => setBtnAsideSelect("CITAS")} />
                     <BotonAside texto="RITUALES" imagen={iconRituales} imagenSecundario = {iconRituales} btnSeleccionado={btnAsideSelect} onClick={() => setBtnAsideSelect("RITUALES")} />
-                    <BotonAside texto="SANTUARIO" imagen={iconCalendario} imagenSecundario = {iconCalendarioBlanco} btnSeleccionado={btnAsideSelect} onClick={() => setBtnAsideSelect("SANTUARIO")} />
                     <BotonAside texto="EMPLEADOS" imagen={iconCalendario} imagenSecundario = {iconCalendarioBlanco} btnSeleccionado={btnAsideSelect} onClick={() => setBtnAsideSelect("EMPLEADOS")} />
                     <BotonAside texto="CONFIGURACION" imagen={iconCalendario} imagenSecundario = {iconCalendarioBlanco} btnSeleccionado={btnAsideSelect} onClick={() => setBtnAsideSelect("CONFIGURACION")} />
                 </article>
@@ -58,10 +58,10 @@ function Panel() {
             </aside>
             
                 
-            <article className='flex flex-col mt-5 lg:px-10  items-center justify-center w-full'>
-                <header className='w-full bg-white'>
+            <article className='flex flex-col lg:px-10  items-center justify-center w-full'>
+                {/* <header className='w-full bg-white'>
                     <h1 className='text-2xl text-center font-bold '>Panel de Administración</h1>
-                </header>
+                </header> */}
 
                 <Outlet/>
 

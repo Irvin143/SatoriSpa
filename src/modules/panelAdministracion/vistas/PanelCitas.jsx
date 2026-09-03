@@ -87,7 +87,7 @@ export default function PanelCitas({ btnAsideSelect }) {
             <span>Visualice y administre todas las citas programadas en el santuario</span>
 
             {/* Resumen rápido */}
-            <article className="grid grid-cols-3 gap-3 mt-6 mb-2 lg:max-w-md">
+            <article className="grid grid-cols-3 gap-3 mt-6 mb-1 lg:max-w-md">
                 <ResumenMetrica valor={totalCitas} etiqueta="Total" />
                 <ResumenMetrica valor={totalPendientes} etiqueta="Pendientes" acento="text-amber-700" />
                 <ResumenMetrica valor={totalHoy} etiqueta="Hoy" acento="text-[#655e57]" />
@@ -111,7 +111,7 @@ export default function PanelCitas({ btnAsideSelect }) {
             </article>
 
             {/* Filtros para Desktop */}
-            <article className="hidden lg:flex justify-start items-center gap-5 my-7 px-5 py-4 rounded-[30px] backdrop-blur-xl border border-white/30 bg-white/10">
+            <article className="hidden lg:flex justify-start items-center gap-5  px-5 py-5 rounded-[30px] backdrop-blur-xl border border-white/30 bg-white/10">
                 <select
                     value={servicioFiltro}
                     onChange={(e) => setServicioFiltro(e.target.value)}
@@ -178,7 +178,7 @@ export default function PanelCitas({ btnAsideSelect }) {
 
             {/* Tabla */}
             {citasFiltradas.length > 0 && (
-                <article className="my-5 hidden lg:block shadow-md rounded-[20px] w-full overflow-hidden">
+                <article className=" hidden lg:block shadow-md rounded-[20px] w-full overflow-hidden">
                     <table className="w-full text-[#655e57] border-collapse">
                         <thead>
                             <tr className="bg-[#655e57]/80 text-white text-left">

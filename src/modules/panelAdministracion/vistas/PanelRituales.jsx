@@ -75,7 +75,7 @@ function PanelRituales({ btnAsideSelect }) {
     });
 
     return (
-        <section className="text-[#655e57] w-full flex flex-col items-center justify-start p-5">
+        <section className="text-[#655e57] w-full flex flex-col items-center justify-start p-5 lg:p-0">
             <article className='lg:flex lg:items-center lg:justify-between lg:w-full lg:mb-10'>
                 <article>
                     <h2 className='font-bold text-3xl my-5'>Catalogo de Rituales</h2>
@@ -129,7 +129,7 @@ function PanelRituales({ btnAsideSelect }) {
                     <p className="text-center py-10">No se encontraron rituales.</p>
                 )}
 
-                <article className="lg:grid lg:grid-cols-3 lg:gap-15 lg:px-2 pb-25 lg:py-5  lg:overflow-y-auto overflow-hidden">
+                <article className="lg:grid lg:grid-cols-3 lg:gap-15 lg:px-2  lg:py-5  lg:overflow-y-auto overflow-hidden">
                     {serviciosFiltrados.map((servicio) => (
                         <CardServicio
                             key={servicio.id}
