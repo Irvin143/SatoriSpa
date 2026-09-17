@@ -66,15 +66,17 @@ export default function ReservacionSevicios({
   });
 
     return(
-        <section className={`relative min-h-screen pt-20 lg:pt-10 `}>
-            {/* FONDO */}
+        <section className="relative min-h-screen pt-20 lg:pt-10">
+            {/* FONDO FIJO: Se ancla a la pantalla, no al contenido */}
             <div
-                className="absolute inset-0 bg-cover bg-center"
+                className="fixed top-0 left-0 w-full h-[100dvh] bg-cover bg-center -z-10"
                 style={{ backgroundImage: `url(${fondoCitas})` }}
             ></div>
 
             {/* CONTENIDO */}
             <main className="relative text-[#655e57] px-5">
+                
+                {/* ... (el resto de tu código de <main> se queda exactamente igual) ... */}
               <SubTitulo titulo="Rituales" id="rituales" subtitulo="Elige el ritual que deseas reservar"  />
               <article className='lg:flex justify-center items-center gap-5 mb-5 lg:gap-10 lg:mx-10'>
                 <InputBuscar

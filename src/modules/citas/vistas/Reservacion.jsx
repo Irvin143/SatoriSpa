@@ -50,10 +50,10 @@ function Citas() {
             
           ">
             <article className="flex items-center justify-start [grid-area:hamburguesa] lg:hidden">
-              <button onClick={() => setMenuAbierto(!menuAbierto)} className="flex flex-col gap-1">
-                <span className="block w-5 h-[1.5px] bg-[#655e57]"></span>
-                <span className="block w-5 h-[1.5px] bg-[#655e57]"></span>
-                <span className="block w-5 h-[1.5px] bg-[#655e57]"></span>  
+              <button onClick={() => setMenuAbierto(!menuAbierto)} className="flex flex-col gap-[6px]">
+                <span className="block w-6 h-[2px] bg-[#655e57]"></span>
+                <span className="block w-6 h-[2px] bg-[#655e57]"></span>
+                <span className="block w-6 h-[2px] bg-[#655e57]"></span>  
               </button>
             </article>
 

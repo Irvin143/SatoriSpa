@@ -138,13 +138,16 @@ function ReservacionDatos({
     };
 
     return (
-        <section
-            className="min-h-screen text-[#655e57] pt-30 p-5 lg:p-20 bg-cover bg-left bg-no-repeat"
-            style={{
-                backgroundImage: `url(${fondoDatos})`
-            }}
-        >
-            <article className='grid 
+        <section className="relative min-h-screen text-[#655e57] pt-30 p-5 lg:p-20">
+            
+            {/* FONDO FIJO */}
+            <div
+                className="fixed top-0 left-0 w-full h-[100dvh] bg-cover bg-left bg-no-repeat -z-10"
+                style={{ backgroundImage: `url(${fondoDatos})` }}
+            ></div>
+
+            {/* CONTENIDO PRINCIPAL */}
+            <article className='relative grid 
                 grid-cols-[1fr_auto]  grid-rows-[auto_auto]
                 [grid-template-areas:"link_tarjeta"_"datos_datos"]
                 lg:grid-cols-[1fr_auto_auto] lg:gap-15  
@@ -157,6 +160,8 @@ function ReservacionDatos({
                 >
                     ← Regresar
                 </Link>
+                
+                {/* ... (el resto de tu código a partir de aquí se queda exactamente igual) ... */}
                 <article className='flex [grid-area:tarjeta] h-fit self-start items-center gap-2 mt-3 py-3 px-5 text-[0.9em] text-[#026918] bg-[#DDD]/60 rounded-[20px] shadow-xl'>
                     <p className='text-[1.5em] font-bold rounded-full border-1 w-[30px] h-[30px] flex items-center justify-center'>✓</p>
                     <article>

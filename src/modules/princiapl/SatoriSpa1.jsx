@@ -120,8 +120,8 @@ export default function SatoriSpa() {
 
         {/* ── HERO ───────────────────────────────────────────────────────────── */}
         <article
-          className="h-screen w-full bg-cover bg-center bg-no-repeat flex flex-col z-1 justify-between  text-white"
-          style={{ backgroundImage: `url(${fondoHeader})` }} 
+          className="min-h-[100dvh] w-full bg-cover bg-center bg-no-repeat flex flex-col z-1 justify-between text-white"
+          style={{ backgroundImage: `url(${fondoHeader})` }}
         >
           <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/60 to-transparent  pointer-events-none" />
     
@@ -136,15 +136,57 @@ export default function SatoriSpa() {
             </button>
           </article>
 
-          <nav id="menuNav"
-            className={`[grid-area:nav] flex-col items-center justify-center border-t border-[rgba(200,200,200,0.5)] lg:border-t-0 lg:text-xl lg:flex lg:flex-row lg:items-center lg:justify-center lg:m-0   ${
-              menuAbierto ? "flex" : "hidden"}` }>
-              {rol === "administrador" && (<Link to="/administracion" className="no-underline text-white font-bold  duration-300 p-2 hover:text-shadow-[0_0_5px_#FFFFFF,0_0_5px_#000] hover:underline hover:decoration-white hover:scale-110 lg:px-8">Satori </Link>)}
-              {user ? (<Link to="/servicios" className="no-underline text-center text-white font-bold  duration-300 p-2 hover:text-shadow-[0_0_5px_#FFFFFF,0_0_5px_#000] hover:underline hover:decoration-white hover:scale-110 lg:px-8">Mis citas</Link>) : (<></>)}
-              <LinkNav referencia="inicio" texto="Inicio" />
-              <LinkNav referencia="servicios" texto="Servicios" />
-              <LinkNav referencia="contacto"  texto="Contacto" />
-              <LinkNav referencia="redes"  texto="Redes" />
+          <nav
+            id="menuNav"
+            className={`[grid-area:nav] flex-col items-center justify-center border-t border-[rgba(200,200,200,0.5)] lg:border-t-0 lg:text-xl lg:flex lg:flex-row lg:items-center lg:justify-center lg:m-0 ${
+              menuAbierto ? "flex" : "hidden"
+            }`}
+          >
+            {rol === "administrador" && (
+              <Link
+                to="/administracion"
+                className="no-underline text-white font-bold duration-300 p-2 hover:text-shadow-[0_0_5px_#FFFFFF,0_0_5px_#000] hover:underline hover:decoration-white hover:scale-110 lg:px-8"
+              >
+                Satori
+              </Link>
+            )}
+
+            <LinkNav referencia="inicio" texto="Inicio" />
+            <LinkNav referencia="servicios" texto="Servicios" />
+            <LinkNav referencia="contacto" texto="Contacto" />
+            <LinkNav referencia="redes" texto="Redes" />
+
+            {user ? (
+              <>
+                <Link
+                  to="/servicios"
+                  className="no-underline text-center text-white font-bold duration-300 p-2 hover:text-shadow-[0_0_5px_#FFFFFF,0_0_5px_#000] hover:underline hover:decoration-white hover:scale-110 lg:px-8"
+                >
+                  Mis citas
+                </Link>
+                <Link
+                  to="/perfil"
+                  className="no-underline text-center text-white font-bold duration-300 p-2 hover:text-shadow-[0_0_5px_#FFFFFF,0_0_5px_#000] hover:underline hover:decoration-white hover:scale-110 lg:px-8"
+                >
+                  Perfil
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="no-underline text-center text-white font-bold duration-300 p-2 hover:text-shadow-[0_0_5px_#FFFFFF,0_0_5px_#000] hover:underline hover:decoration-white hover:scale-110 lg:px-8"
+                >
+                  Iniciar sesión
+                </Link>
+                <Link
+                  to="/registro"
+                  className="no-underline text-center text-white font-bold duration-300 p-2 hover:text-shadow-[0_0_5px_#FFFFFF,0_0_5px_#000] hover:underline hover:decoration-white hover:scale-110 lg:px-8"
+                >
+                  Registrarse
+                </Link>
+              </>
+            )}
           </nav>
 
           <img src={logoSatori} alt="Logo Satori" className="[grid-area:logo] -mx-5 w-20 lg:w-[120px]" />

@@ -149,10 +149,12 @@ export default function CitasHorario({
     };
 
     return (
-        <section className="text-[#655e57] bg-[#f4f0ea] px-5 pt-30 lg:p-20">
+        // Agregamos min-h-[100dvh] aquí
+        <section className="min-h-[100dvh] text-[#655e57] bg-[#f4f0ea] px-5 pt-30 lg:p-20 relative">
+            
             <Link
                 to="/reservacion"
-                className="my-5 ml-5 text-[1.2em]"
+                className="my-5 ml-5 text-[1.2em] inline-block"
                 onClick={() => setOrdenSeleccionado(1)}
             >
                 ← Regresar
@@ -160,7 +162,6 @@ export default function CitasHorario({
 
             <h2 className='text-[2em] font-bold'>Elije tu momento</h2>
             <p className='mb-6 lg:mb-0'>Sincroniza tu paz interior con los ritmos del santuario</p>
-
             {cargando && <p className="ml-5 text-sm">Cargando servicio...</p>}
             {!cargando && errorServicio && (
                 <p className="ml-5 text-sm text-red-600">{errorServicio}</p>
@@ -260,7 +261,7 @@ export default function CitasHorario({
                 </article>
 
                 {/* Resumen de selección para mobile */}
-                <article className='sticky bottom-0 flex flex-col justify-center items-center lg:hidden'>
+                <article className='sticky bottom-0 flex mt-5 flex-col justify-center items-center lg:hidden'>
                     <ResumenSeleccion
                         nombreServicio={servicioActual?.nombre || ''}
                         servicioSeleccionado={servicioSeleccionado}
@@ -272,7 +273,7 @@ export default function CitasHorario({
                     <Link
                         to="/reservacion/datos"
                         aria-disabled={!puedeConfirmar}
-                        className={`w-[90%] text-white text-center py-4 px-8 flex items-center justify-center my-5 rounded-[25px] backdrop-blur-md text-sm font-bold hover:cursor-pointer hover:bg-[#655e57]/70 transition-all duration-300
+                        className={`w-[90%] text-white text-center py-4 px-8 flex items-center justify-center my-2 rounded-[25px] backdrop-blur-md text-sm font-bold hover:cursor-pointer hover:bg-[#655e57]/70 transition-all duration-300
                             ${puedeConfirmar ? 'bg-[#655e57]' : 'bg-[#9c9790]'}`}
                         onClick={handleConfirmar}
                     >

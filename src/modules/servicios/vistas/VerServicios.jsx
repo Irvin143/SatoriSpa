@@ -57,16 +57,32 @@ export default function VerServicios() {
     });
 
     return (
-        <section className="relative min-h-screen pt-20 lg:pt-10">
-            {/* FONDO */}
+        <section className="relative min-h-screen pt-10 lg:pt-10">
+            {/* FONDO FIJO (Corregido para móviles como en las otras pantallas) */}
             <div
-                className="absolute inset-0 bg-cover bg-center"
+                className="fixed inset-0 w-full h-[100lvh] bg-cover bg-center -z-10"
                 style={{ backgroundImage: `url(${fondoCitas})` }}
             ></div>
 
             {/* CONTENIDO */}
-            <main className="relative text-[#655e57] px-5">
-                <div className="flex  xl:mx-10  items-center justify-between">
+            <main className="relative z-10 text-[#655e57] px-5">
+                
+                {/* ENLACE DE REGRESO TEMÁTICO */}
+                <article className="xl:mx-10 mb-2">
+                    <Link
+                        to="/"
+                        className="inline-flex items-center gap-2 text-[1.1em] text-[#655e57] hover:text-[#4d473f] transition-all duration-300 group"
+                    >
+                        <span className="transform group-hover:-translate-x-1 transition-transform duration-300">
+                            ←
+                        </span>
+                        <span className="border-b border-transparent group-hover:border-[#4d473f] transition-colors duration-300 italic">
+                            Volver al santuario
+                        </span>
+                    </Link>
+                </article>
+
+                <div className="flex xl:mx-10 items-center justify-between">
                     <SubTitulo titulo="Rituales" id="rituales" />
                     <Link
                         to="/reservacion"
@@ -88,7 +104,7 @@ export default function VerServicios() {
                         placeholder="Buscar servicio..."
                         onChange={(e) => setBusqueda(e.target.value)}
                     />
-                    <article className="flex justify-center px-5 py-1 mt-5 border-1 rounded-[20px] lg:m-0">
+                    <article className="flex justify-center px-5 py-1 mt-5 border-1 rounded-[20px] lg:m-0 bg-white/40 backdrop-blur-sm">
                         <BotonFiltro
                             texto="Todos"
                             btnSeleccionado={btnFiltroSelect}
