@@ -1,49 +1,8 @@
-import { useState } from "react";
-
-const stats = [
-  { id: "citas", label: "Citas de hoy", value: "12", delta: "+2 vs. ayer" },
-  { id: "ingresos", label: "Ingresos", value: "$1,240", delta: "+8%" },
-  { id: "clientes", label: "Clientes nuevos", value: "5", delta: "Esta semana" },
-];
-
-const weekDays = [
-    { label: "Lun", date: 23 },
-    { label: "Mar", date: 24 },
-    { label: "Mié", date: 25 },
-    { label: "Jue", date: 26 },
-    { label: "Vie", date: 27 },
-];
+import { useState, useEffect, useCallback } from "react";
+import { getCitasPorRango, getCitasPorDia, getCountCitasHoy, getIngresosHoy, getCountClientesNuevos } from "./Satori/Services/useSatori.js";
+import { getLunesDeLaSemana, generarDiasSemana, formatFechaISO, horaAFila,getIndiceDiaHoy } from "./Satori/utils/satoriUtil.js";
 
 const hours = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
-
-const blocks = [
-  { day: 0, startRow: 1, span: 2, title: "Masaje Sueco", meta: "Lucía G. · 09:30–10:30" },
-  { day: 1, startRow: 1, span: 2, title: "Facial Hidratante", meta: "Carlos V. · 09:00–10:30", active: true },
-];
-
-const agenda = [
-  {
-    time: "09:00 – 10:30",
-    status: "confirmada",
-    client: "Carlos Vargas",
-    service: "Facial Hidratante Profundo",
-    staff: "Ana S.",
-  },
-  {
-    time: "11:00 – 12:00",
-    status: "en curso",
-    client: "Elena Robles",
-    service: "Masaje de Piedras Calientes",
-    staff: "Mario L.",
-  },
-  {
-    time: "13:30 – 14:15",
-    status: "cancelada",
-    client: "Sofía Méndez",
-    service: "Manicura Spa",
-    staff: null,
-  },
-];
 
 const statusStyles = {
   confirmada: "bg-[#E7EFE6] text-[#33553A] border-[#B9D2B6]",
@@ -63,56 +22,30 @@ function StatCard({ label, value, delta }) {
   );
 }
 
-// function Toolbar({ selectedDate }) {
-//   return (
-//     <nav
-//       aria-label="Acciones de la agenda"
-//       className="flex flex-wrap items-center gap-3 rounded-lg border border-[#E4DCCB] bg-white px-4 py-3"
-//     >
-//       <button
-//         type="button"
-//         className="rounded-md bg-[#2F5233] px-4 py-2 text-sm font-medium text-white hover:bg-[#274429]"
-//       >
-//         + Nueva cita
-//       </button>
-//       <button
-//         type="button"
-//         className="rounded-md border border-[#D8CFBA] px-4 py-2 text-sm text-[#3A362C] hover:bg-[#F7F3EA]"
-//       >
-//         Editar
-//       </button>
-//       <button
-//         type="button"
-//         className="rounded-md px-4 py-2 text-sm text-[#8A241F] hover:bg-[#FBEEED]"
-//       >
-//         Cancelar cita
-//       </button>
+function AgendaItem({ item }) {
+  return (
+    <li className="border-b border-[#EEE8DA] py-4 last:border-none ">
+      <div className="flex items-center justify-between gap-2">
+        <time className="text-xs text-[#8C8878]">{item.time}</time>
+        <span
+          className={
+            "rounded-full border px-2 py-0.5 text-[11px] font-medium " + statusStyles[item.status]
+          }
+        >
+          {item.status}
+        </span>
+      </div>
+      <p className="mt-1  text-base text-[#26332B]">{item.client}</p>
+      <p className="text-sm text-[#5B5748]">{item.service}</p>
+      {item.staff && (
+        <p className="mt-1 text-xs text-[#8C8878]">Terapista: {item.staff}</p>
+      )}
+    </li>
+  );
+}
 
-//       <span className="ml-auto flex flex-wrap items-center gap-2">
-//         <select
-//           aria-label="Filtrar por empleado"
-//           className="rounded-md border border-[#D8CFBA] bg-[#FBF8F1] px-3 py-2 text-sm text-[#3A362C]"
-//         >
-//           <option>Todos los empleados</option>
-//         </select>
-//         <select
-//           aria-label="Filtrar por servicio"
-//           className="rounded-md border border-[#D8CFBA] bg-[#FBF8F1] px-3 py-2 text-sm text-[#3A362C]"
-//         >
-//           <option>Todos los servicios</option>
-//         </select>
-//         <time
-//           dateTime={selectedDate}
-//           className="rounded-md border border-[#D8CFBA] bg-[#FBF8F1] px-3 py-2 text-sm text-[#3A362C]"
-//         >
-//           24/10/2023
-//         </time>
-//       </span>
-//     </nav>
-//   );
-// }
-
-function WeekCalendar({ activeDay, onSelectDay }) {
+function WeekCalendar({ activeDay, onSelectDay, weekDays, citas }) {
+    console.log("Citas para la semana:", citas);
   return (
     <section aria-labelledby="calendario-titulo" className="rounded-[16px] border border-[#E4DCCB] bg-white p-4">
       <header className="mb-4 flex items-center justify-between">
@@ -133,7 +66,7 @@ function WeekCalendar({ activeDay, onSelectDay }) {
       </header>
 
       <table className="w-full border-collapse text-sm">
-        <caption className="sr-only">Horario semanal de citas, del 23 al 29 de octubre de 2023</caption>
+        <caption className="sr-only">Horario semanal de citas</caption>
         <thead>
           <tr>
             <th scope="col" className="w-16"></th>
@@ -168,23 +101,22 @@ function WeekCalendar({ activeDay, onSelectDay }) {
                 {hour}
               </th>
               {weekDays.map((_, dayIndex) => {
-                const block = blocks.find(
+                const cita = citas.find(
                   (b) => b.day === dayIndex && b.startRow === rowIndex + 1
                 );
                 return (
-                  <td key={dayIndex} className="relative h-16 border-l border-[#EEE8DA] align-top p-1">
-                    {block && (
+                  <td key={dayIndex} className="relative  border-l border-[#EEE8DA] align-top p-1">
+                    {cita && (
                       <article
                         className={
-                          "rounded-md border px-2 py-1 text-xs " +
-                          (block.active
+                          "rounded-md border px-2 py-1 min-h-30 lg:min-h-20 text-xs " +
+                          (cita.active
                             ? "border-[#C8B383] bg-[#F6EFDD]"
                             : "border-[#D9D2C1] bg-[#F3F0E7]")
                         }
-                        style={{ minHeight: `${block.span * 3.5}rem` }}
                       >
-                        <p className="font-medium text-[#26332B]">{block.title}</p>
-                        <p className="text-[#8C8878]">{block.meta}</p>
+                        <p className="font-medium text-[#26332B]">{cita.title}</p>
+                        <p className="text-[#8C8878]">{cita.meta}</p>
                       </article>
                     )}
                     {activeDay === dayIndex && rowIndex === 1 && (
@@ -206,34 +138,124 @@ function WeekCalendar({ activeDay, onSelectDay }) {
   );
 }
 
-function AgendaItem({ item }) {
-  return (
-    <li className="border-b border-[#EEE8DA] py-4 last:border-none">
-      <div className="flex items-center justify-between gap-2">
-        <time className="text-xs text-[#8C8878]">{item.time}</time>
-        <span
-          className={
-            "rounded-full border px-2 py-0.5 text-[11px] font-medium " + statusStyles[item.status]
-          }
-        >
-          {item.status}
-        </span>
-      </div>
-      <p className="mt-1  text-base text-[#26332B]">{item.client}</p>
-      <p className="text-sm text-[#5B5748]">{item.service}</p>
-      {item.staff && (
-        <p className="mt-1 text-xs text-[#8C8878]">Terapista: {item.staff}</p>
-      )}
-    </li>
-  );
-}
+// StatCard, WeekCalendar, AgendaItem se quedan IGUAL que ya los tienes.
 
 export default function PanelSatori() {
-  const [activeDay, setActiveDay] = useState(1);
+  const [lunes, setLunes] = useState(getLunesDeLaSemana());
+  const [activeDay, setActiveDay] = useState(() => getIndiceDiaHoy() ?? 0); // <- antes era useState(1)
+  const [weekDays, setWeekDays] = useState(() => generarDiasSemana(getLunesDeLaSemana()));
+
+  const [citasSemana, setCitasSemana] = useState([]);
+  const [agenda, setAgenda] = useState([]);
+  const [stats, setStats] = useState([]);
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Recalcular weekDays cuando cambie "lunes"
+  useEffect(() => {
+    setWeekDays(generarDiasSemana(lunes));
+  }, [lunes]);
+
+  // Cargar citas de la semana (para la grilla)
+  const cargarCitasSemana = useCallback(async () => {
+    const dias = generarDiasSemana(lunes);
+    const inicio = dias[0].isoDate;
+    const fin = dias[dias.length - 1].isoDate;
+
+    const data = await getCitasPorRango(inicio, fin);
+    console.log("Citas de la semana:", data);
+
+    const citasFormateadas = data
+      .map((c) => {
+        const dayIndex = dias.findIndex((d) => d.isoDate === c.fechaCita);
+        const startRow = horaAFila(c.hora, hours);
+        if (dayIndex === -1 || startRow === null) return null;
+
+        return {
+          day: dayIndex,
+          startRow,
+          span: c.servicios ? Math.max(1, Math.round(c.servicios.duracion / 60)) : 1,
+          title: c.servicios?.nombre ?? "Servicio",
+          meta: `${c.nombreCliente} · ${c.hora?.slice(0, 5)}`,
+          estado: c.estado,
+        };
+      })
+      .filter(Boolean);
+      console.log("Citas formateadas para la semana:", citasFormateadas);
+
+    setCitasSemana(citasFormateadas);
+  }, [lunes]);
+
+  // Cargar agenda del día seleccionado
+  const cargarAgendaDelDia = useCallback(async () => {
+    const dias = generarDiasSemana(lunes);
+    const fechaSeleccionada = dias[activeDay]?.isoDate;
+    if (!fechaSeleccionada) return;
+
+    const data = await getCitasPorDia(fechaSeleccionada);
+
+    const agendaFormateada = data.map((c) => ({
+      time: c.hora?.slice(0, 5) ?? "",
+      status: c.estado,
+      client: c.nombreCliente,
+      service: c.servicios?.nombre ?? "Servicio",
+      staff: null, // pendiente: aún no hay relación de staff en "citas"
+    }));
+
+    setAgenda(agendaFormateada);
+  }, [lunes, activeDay]);
+
+  // Cargar stats (tarjetas resumen)
+  const cargarStats = useCallback(async () => {
+    const hoy = formatFechaISO(new Date());
+    const dias = generarDiasSemana(lunes);
+    const inicioSemana = dias[0].isoDate;
+    const finSemana = dias[dias.length - 1].isoDate;
+
+    const [citasHoy, ingresosHoy, clientesNuevos] = await Promise.all([
+      getCountCitasHoy(hoy),
+      getIngresosHoy(hoy),
+      getCountClientesNuevos(inicioSemana, finSemana),
+    ]);
+
+    setStats([
+      { id: "citas", label: "Citas de hoy", value: String(citasHoy), delta: "" },
+      { id: "ingresos", label: "Ingresos", value: `$${ingresosHoy.toLocaleString()}`, delta: "Hoy" },
+      { id: "clientes", label: "Clientes nuevos", value: String(clientesNuevos), delta: "Esta semana" },
+    ]);
+  }, [lunes]);
+
+  // Disparar todas las cargas
+  useEffect(() => {
+    let activo = true;
+    setLoading(true);
+    setError(null);
+
+    Promise.all([cargarCitasSemana(), cargarAgendaDelDia(), cargarStats()])
+      .catch((err) => {
+        if (activo) setError(err);
+      })
+      .finally(() => {
+        if (activo) setLoading(false);
+      });
+
+    return () => {
+      activo = false;
+    };
+  }, [cargarCitasSemana, cargarAgendaDelDia, cargarStats]);
+
+  if (loading) {
+    return <div className="p-10 text-center text-[#8C8878]">Cargando panel...</div>;
+  }
+
+  if (error) {
+    return <div className="p-10 text-center text-[#8A3B37]">Ocurrió un error al cargar los datos.</div>;
+  }
 
   return (
-    <div className="w-full min-h-screen bg-[#FAF6EC] text-[#655e57] font-sans text-[#3A362C]">
-      <div className="mx-auto px-6 lg:px-0 py-8">
+    <div className="w-full min-h-screen bg-[#FAF6EC] text-[#655e57] font-sans text-[#3A362C] lg:mb-5">
+      <div className="mx-auto px-6 lg:px-0">
         <header className="mb-6">
           <h1 className="font-bold text-3xl">Dashboard</h1>
           <p className="text-sm text-[#8C8878]">Vista general de tu spa, en tiempo real.</p>
@@ -247,16 +269,25 @@ export default function PanelSatori() {
               ))}
             </section>
 
-            {/* <Toolbar selectedDate="2023-10-24" /> */}
-            <WeekCalendar activeDay={activeDay} onSelectDay={setActiveDay} />
+            <WeekCalendar
+              activeDay={activeDay}
+              onSelectDay={setActiveDay}
+              weekDays={weekDays}
+              citas={citasSemana}
+            />
           </div>
 
-          <aside aria-labelledby="agenda-titulo" className="rounded-[16px] shadow-sm bg-white/70 backdrop-blur-md border border-[#E4DCCB] bg-white p-5">
+          <aside aria-labelledby="agenda-titulo" className="rounded-[16px] shadow-sm mb-10 lg:mb-0 bg-white/70 backdrop-blur-md border border-[#E4DCCB] bg-white p-5">
             <h2 id="agenda-titulo" className=" text-xl font-bold">
-              Agenda de hoy
+              Agenda de {weekDays[activeDay]?.label ?? ""}
             </h2>
-            <p className="mb-2 text-sm text-[#8C8878]">Martes, 24 de octubre</p>
+            <p className="mb-2 text-sm text-[#8C8878]">
+              {weekDays[activeDay] ? `Día ${weekDays[activeDay].date}` : ""}
+            </p>
             <ul>
+              {agenda.length === 0 && (
+                <li className="py-4 text-sm text-[#8C8878]">No hay citas para este día.</li>
+              )}
               {agenda.map((item, i) => (
                 <AgendaItem key={i} item={item} />
               ))}

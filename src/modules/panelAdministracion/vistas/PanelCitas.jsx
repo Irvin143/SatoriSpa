@@ -82,8 +82,8 @@ export default function PanelCitas({ btnAsideSelect }) {
     const totalHoy = (citas ?? []).filter((c) => formatearFecha(c.fechaCita) === "Hoy").length;
 
     return (
-        <section className="transition-all duration-300 p-5 lg:p-0 w-full">
-            <h2 className="font-bold text-3xl my-5">Gestion de Citas</h2>
+        <section className="transition-all duration-300 p-5 lg:p-0 lg:mb-5 w-full">
+            <h2 className="font-bold text-3xl ">Gestion de Citas</h2>
             <span>Visualice y administre todas las citas programadas en el santuario</span>
 
             {/* Resumen rápido */}

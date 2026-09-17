@@ -58,7 +58,7 @@ function Panel() {
             </aside>
             
                 
-            <article className='flex flex-col lg:px-10  items-center justify-center w-full'>
+            <article className='flex flex-col lg:px-10  items-center justify-center w-full pt-5'>
                 {/* <header className='w-full bg-white'>
                     <h1 className='text-2xl text-center font-bold '>Panel de Administración</h1>
                 </header> */}

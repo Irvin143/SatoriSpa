@@ -75,10 +75,10 @@ function PanelRituales({ btnAsideSelect }) {
     });
 
     return (
-        <section className="text-[#655e57] w-full flex flex-col items-center justify-start p-5 lg:p-0">
+        <section className="text-[#655e57] w-full flex flex-col items-center justify-start px-5 lg:p-0">
             <article className='lg:flex lg:items-center lg:justify-between lg:w-full lg:mb-10'>
                 <article>
-                    <h2 className='font-bold text-3xl my-5'>Catalogo de Rituales</h2>
+                    <h2 className='font-bold text-3xl'>Catalogo de Rituales</h2>
                     <span>Configure las experiencias sensoriales del santuario, gestionando tiempos, esencias y la armonia en cada sesion</span>
                 </article>
                 <button
