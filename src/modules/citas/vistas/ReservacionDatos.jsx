@@ -9,7 +9,7 @@ import { useAuth } from '../../../Auth/AuthContext.jsx';
 import { crearCita, obtenerInfoUsuario } from '../services/useCita.js';
 
 import iconCandado from "../../../assets/citas/iconCandado.png";
-import fondoDatos from "../../../assets/citas/fondoDatos.png";
+import fondoDatos from "../../../assets/citas/fondodatos.png";
 import iconEscudo from "../../../assets/citas/iconEscudo.png";
 
 function ReservacionDatos({

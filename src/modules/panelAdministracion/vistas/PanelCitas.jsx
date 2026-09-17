@@ -6,7 +6,7 @@ import iconLupa from "../../../assets/iconLupa.png";
 
 import { InputBuscar } from "../../componentesPanel/inputs.jsx";
 
-import { obtenerCitas } from "./citas/services/useCita.js";
+import { obtenerCitas } from "./Citas/services/useCita.js";
 
 const ESTILOS_ESTATUS = {
     Pendiente: "bg-amber-100 text-amber-800",
